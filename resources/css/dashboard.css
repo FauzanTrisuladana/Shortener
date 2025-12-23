@@ -1,0 +1,50 @@
+/* Dashboard Layout & Dark Mode */
+body.dashboard-layout {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dashboard-layout.dark-mode {
+    background-color: #0a0a0a;
+    color: #ffffff;
+}
+
+body.dashboard-layout.dark-mode .navbar {
+    background-color: #1a1a1a !important;
+    border-color: #3a3a3a !important;
+}
+
+body.dashboard-layout.dark-mode .card {
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border-color: #3a3a3a;
+}
+
+body.dashboard-layout.dark-mode .btn-light {
+    background-color: #3a3a3a;
+    border-color: #4a4a4a;
+    color: #ffffff;
+}
+
+body.dashboard-layout.dark-mode .btn-light:hover {
+    background-color: #4a4a4a;
+}
+
+body.dashboard-layout.dark-mode .table {
+    color: #ffffff;
+}
+
+body.dashboard-layout.dark-mode .form-control {
+    background-color: #1a1a1a;
+    border-color: #3a3a3a;
+    color: #ffffff;
+}
+
+body.dashboard-layout.dark-mode .form-control:focus {
+    background-color: #1a1a1a;
+    border-color: #FF4433;
+    color: #ffffff;
+}
+
+.dashboard-main {
+    margin-left: 250px;
+}

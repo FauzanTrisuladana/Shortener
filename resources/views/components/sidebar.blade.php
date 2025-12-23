@@ -1,10 +1,7 @@
-<aside class="d-flex flex-column p-3 text-white" style="width: 250px; background-color: #161615; min-height: 100vh;" id="sidebarMenu">
+<aside class="d-flex flex-column p-3 text-white" style="width: 250px; background-color: #161615; position: fixed; top: 0; left: 0; height: 100vh; overflow-y: auto; z-index: 1000;" id="sidebarMenu">
     <!-- Logo / Brand -->
-    <a href="/" class="d-flex align-items-center mb-4 text-white text-decoration-none">
-        <div class="bg-danger rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px;">
-            <span style="font-size: 20px;">🔗</span>
-        </div>
-        <span class="fs-5 fw-bold">s.id</span>
+    <a href="{{ route('dashboard') }}" class="d-flex align-items-center mb-4 text-white text-decoration-none">
+        <span class="fs-5 fw-bold">Link Shortener</span>
     </a>
 
     <hr style="border-color: #3E3E3A;">

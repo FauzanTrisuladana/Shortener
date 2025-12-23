@@ -12,7 +12,7 @@
 
 <!-- Statistics Cards -->
 <div class="row mb-4">
-    <div class="col-md-3 mb-3">
+    <div class="col-md-4 mb-4">
         <div class="card border-0 shadow-sm">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-3">
@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <div class="col-md-3 mb-3">
+    <div class="col-md-4 mb-4">
         <div class="card border-0 shadow-sm">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-3">
@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <div class="col-md-3 mb-3">
+    <div class="col-md-4 mb-4">
         <div class="card border-0 shadow-sm">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-3">
@@ -52,21 +52,6 @@
                 <h2 class="mb-0">0%</h2>
                 <small class="text-muted">
                     Rata-rata
-                </small>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3 mb-3">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h6 class="text-muted mb-0">QR Scans</h6>
-                    <i class="bi bi-qr-code text-danger fs-4"></i>
-                </div>
-                <h2 class="mb-0">0</h2>
-                <small class="text-muted">
-                    Total scan
                 </small>
             </div>
         </div>

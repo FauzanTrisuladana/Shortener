@@ -12,15 +12,14 @@
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700" rel="stylesheet" />
 
     <!-- Styles / Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/css/dashboard.css', 'resources/js/app.js'])
 </head>
-<body>
-    <div class="d-flex" style="min-height: 100vh;">
-        <!-- Sidebar Component -->
-        <x-sidebar />
+<body class="dashboard-layout">
+    <!-- Sidebar Component -->
+    <x-sidebar />
 
-        <!-- Main Content -->
-        <main class="flex-grow-1">
+    <!-- Main Content -->
+    <main class="flex-grow-1 dashboard-main">
             <!-- Navbar / Header -->
             <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
                 <div class="container-fluid px-4">
@@ -32,8 +31,8 @@
                         <button class="btn btn-light">
                             <i class="bi bi-bell"></i>
                         </button>
-                        <button class="btn btn-light" style="border-radius: 8px;">
-                            <i class="bi bi-brightness-high"></i>
+                        <button class="btn btn-light" style="border-radius: 8px;" id="darkModeToggle" onclick="toggleDarkMode()">
+                            <i class="bi bi-brightness-high" id="darkModeIcon"></i>
                         </button>
                         <div class="dropdown">
                             <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
@@ -56,6 +55,37 @@
                 @yield('content')
             </div>
         </main>
-    </div>
+
+    <script>
+        // Dark mode functionality
+        function toggleDarkMode() {
+            const body = document.body;
+            const icon = document.getElementById('darkModeIcon');
+
+            body.classList.toggle('dark-mode');
+
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('bi-brightness-high');
+                icon.classList.add('bi-moon-fill');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                icon.classList.remove('bi-moon-fill');
+                icon.classList.add('bi-brightness-high');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+
+        // Check for saved dark mode preference
+        document.addEventListener('DOMContentLoaded', function() {
+            const darkMode = localStorage.getItem('darkMode');
+            const icon = document.getElementById('darkModeIcon');
+
+            if (darkMode === 'enabled') {
+                document.body.classList.add('dark-mode');
+                icon.classList.remove('bi-brightness-high');
+                icon.classList.add('bi-moon-fill');
+            }
+        });
+    </script>
 </body>
 </html>

@@ -100,29 +100,6 @@
             </div>
         </div>
 
-        <!-- Account Status Card -->
-        <div class="card border-0 shadow-sm mb-4">
-            <div class="card-body p-4">
-                <h6 class="card-title mb-3">Account Status</h6>
-                <div class="d-flex justify-content-between mb-2">
-                    <span class="text-muted">Plan:</span>
-                    <span class="fw-bold">Free Forever</span>
-                </div>
-                <div class="d-flex justify-content-between mb-2">
-                    <span class="text-muted">Links Created:</span>
-                    <span class="fw-bold">0</span>
-                </div>
-                <div class="d-flex justify-content-between mb-3">
-                    <span class="text-muted">Total Clicks:</span>
-                    <span class="fw-bold">0</span>
-                </div>
-                <a href="#" class="btn btn-success w-100">
-                    <i class="bi bi-arrow-up me-2"></i>
-                    Upgrade Plan
-                </a>
-            </div>
-        </div>
-
         <!-- Danger Zone Card -->
         <div class="card border-danger shadow-sm">
             <div class="card-body p-4">
