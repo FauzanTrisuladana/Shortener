@@ -52,7 +52,7 @@
                         class="form-control form-control-dark"
                         id="target_url"
                         name="target_url"
-                        placeholder="https://afif.dev/url"
+                        placeholder="https://trisuladana.com/url-yang-panjang-atau-apalah"
                         required
                         value="{{ old('target_url') }}"
                     >
@@ -65,7 +65,7 @@
                     <label for="custom_slug" class="form-label">Custom Slug (opsional)</label>
                     <div class="input-group">
                         <span class="input-group-text" style="background-color: #1a1a1a; border: 1px solid #3a3a3a; color: #6a6a6a; border-radius: 8px 0 0 8px;">
-                            s.id/
+                            link.trisuladana.com/
                         </span>
                         <input
                             type="text"

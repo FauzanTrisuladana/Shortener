@@ -19,9 +19,9 @@
                     <h6 class="text-muted mb-0">Total Clicks</h6>
                     <i class="bi bi-mouse text-primary fs-4"></i>
                 </div>
-                <h2 class="mb-0">0</h2>
+                <h2 class="mb-0">12,847</h2>
                 <small class="text-success">
-                    <i class="bi bi-arrow-up"></i> 0% dari minggu lalu
+                    <i class="bi bi-arrow-up"></i> 18.2% dari minggu lalu
                 </small>
             </div>
         </div>
@@ -34,7 +34,7 @@
                     <h6 class="text-muted mb-0">Total Links</h6>
                     <i class="bi bi-link-45deg text-success fs-4"></i>
                 </div>
-                <h2 class="mb-0">0</h2>
+                <h2 class="mb-0">24</h2>
                 <small class="text-muted">
                     Link aktif
                 </small>
@@ -49,7 +49,7 @@
                     <h6 class="text-muted mb-0">Click Rate</h6>
                     <i class="bi bi-graph-up text-warning fs-4"></i>
                 </div>
-                <h2 class="mb-0">0%</h2>
+                <h2 class="mb-0">67.4%</h2>
                 <small class="text-muted">
                     Rata-rata
                 </small>
@@ -93,10 +93,79 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td colspan="4" class="text-center py-5 text-muted">
-                                    <i class="bi bi-inbox fs-1 d-block mb-2"></i>
-                                    Belum ada link
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-link-45deg text-primary me-2"></i>
+                                        <div>
+                                            <a href="#" class="text-decoration-none">link.trisuladana.com/promo-special</a>
+                                            <br>
+                                            <small class="text-muted">https://example.com/very-long-url...</small>
+                                        </div>
+                                    </div>
                                 </td>
+                                <td><strong>3,245</strong></td>
+                                <td>15 Des 2025</td>
+                                <td><span class="badge bg-success">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-link-45deg text-primary me-2"></i>
+                                        <div>
+                                            <a href="#" class="text-decoration-none">link.trisuladana.com/campaign-2024</a>
+                                            <br>
+                                            <small class="text-muted">https://marketing.site/campaign...</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><strong>2,891</strong></td>
+                                <td>12 Des 2025</td>
+                                <td><span class="badge bg-success">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-link-45deg text-primary me-2"></i>
+                                        <div>
+                                            <a href="#" class="text-decoration-none">link.trisuladana.com/webinar-tech</a>
+                                            <br>
+                                            <small class="text-muted">https://events.com/webinar-tech...</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><strong>2,456</strong></td>
+                                <td>10 Des 2025</td>
+                                <td><span class="badge bg-success">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-link-45deg text-primary me-2"></i>
+                                        <div>
+                                            <a href="#" class="text-decoration-none">link.trisuladana.com/product-launch</a>
+                                            <br>
+                                            <small class="text-muted">https://shop.com/new-product...</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><strong>1,987</strong></td>
+                                <td>8 Des 2025</td>
+                                <td><span class="badge bg-success">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-link-45deg text-primary me-2"></i>
+                                        <div>
+                                            <a href="#" class="text-decoration-none">link.trisuladana.com/portfolio</a>
+                                            <br>
+                                            <small class="text-muted">https://portfolio.design/showcase...</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><strong>1,268</strong></td>
+                                <td>5 Des 2025</td>
+                                <td><span class="badge bg-success">Active</span></td>
                             </tr>
                         </tbody>
                     </table>

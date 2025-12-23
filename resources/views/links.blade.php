@@ -20,7 +20,7 @@
 <div class="row mb-4">
     <div class="col-md-8">
         <div class="input-group">
-            <span class="input-group-text bg-white">
+            <span class="input-group-text">
                 <i class="bi bi-search"></i>
             </span>
             <input type="text" class="form-control border-start-0" placeholder="Search links...">
@@ -54,16 +54,135 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td colspan="6" class="text-center py-5">
-                                    <div class="text-muted">
-                                        <i class="bi bi-link-45deg fs-1 d-block mb-3"></i>
-                                        <h5>Belum ada link</h5>
-                                        <p>Mulai dengan membuat link shortener pertama Anda</p>
-                                        <button class="btn btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#createLinkModal">
-                                            <i class="bi bi-plus-circle me-2"></i>
-                                            Create First Link
-                                        </button>
-                                    </div>
+                                <td class="ps-4">
+                                    <a href="#" class="text-decoration-none fw-semibold">link.trisuladana.com/promo-special</a>
+                                </td>
+                                <td>
+                                    <span class="text-muted small">https://example.com/very-long-url-here/promo...</span>
+                                </td>
+                                <td><strong>3,245</strong></td>
+                                <td><small class="text-muted">15 Des 2025</small></td>
+                                <td><span class="badge bg-success">Active</span></td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-outline-secondary me-1" title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-primary me-1" title="QR Code">
+                                        <i class="bi bi-qr-code"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="ps-4">
+                                    <a href="#" class="text-decoration-none fw-semibold">link.trisuladana.com/campaign-2024</a>
+                                </td>
+                                <td>
+                                    <span class="text-muted small">https://marketing.site/campaign-end-year-2024...</span>
+                                </td>
+                                <td><strong>2,891</strong></td>
+                                <td><small class="text-muted">12 Des 2025</small></td>
+                                <td><span class="badge bg-success">Active</span></td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-outline-secondary me-1" title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-primary me-1" title="QR Code">
+                                        <i class="bi bi-qr-code"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="ps-4">
+                                    <a href="#" class="text-decoration-none fw-semibold">link.trisuladana.com/webinar-tech</a>
+                                </td>
+                                <td>
+                                    <span class="text-muted small">https://events.com/webinar-tech-summit-2024...</span>
+                                </td>
+                                <td><strong>2,456</strong></td>
+                                <td><small class="text-muted">10 Des 2025</small></td>
+                                <td><span class="badge bg-success">Active</span></td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-outline-secondary me-1" title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-primary me-1" title="QR Code">
+                                        <i class="bi bi-qr-code"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="ps-4">
+                                    <a href="#" class="text-decoration-none fw-semibold">link.trisuladana.com/product-launch</a>
+                                </td>
+                                <td>
+                                    <span class="text-muted small">https://shop.com/new-product-launch-december...</span>
+                                </td>
+                                <td><strong>1,987</strong></td>
+                                <td><small class="text-muted">8 Des 2025</small></td>
+                                <td><span class="badge bg-success">Active</span></td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-outline-secondary me-1" title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-primary me-1" title="QR Code">
+                                        <i class="bi bi-qr-code"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="ps-4">
+                                    <a href="#" class="text-decoration-none fw-semibold">link.trisuladana.com/portfolio</a>
+                                </td>
+                                <td>
+                                    <span class="text-muted small">https://portfolio.design/showcase-works-2024...</span>
+                                </td>
+                                <td><strong>1,268</strong></td>
+                                <td><small class="text-muted">5 Des 2025</small></td>
+                                <td><span class="badge bg-success">Active</span></td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-outline-secondary me-1" title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-primary me-1" title="QR Code">
+                                        <i class="bi bi-qr-code"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="ps-4">
+                                    <a href="#" class="text-decoration-none fw-semibold">link.trisuladana.com/discount-week</a>
+                                </td>
+                                <td>
+                                    <span class="text-muted small">https://store.online/discount-week-special...</span>
+                                </td>
+                                <td><strong>892</strong></td>
+                                <td><small class="text-muted">2 Des 2025</small></td>
+                                <td><span class="badge bg-warning text-dark">Inactive</span></td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-outline-secondary me-1" title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-primary me-1" title="QR Code">
+                                        <i class="bi bi-qr-code"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>

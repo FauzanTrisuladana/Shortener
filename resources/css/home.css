@@ -65,6 +65,31 @@ body.home-page.light-mode .dark-mode-toggle:hover {
     background: rgba(0, 0, 0, 0.2);
 }
 
+body.home-page.light-mode .text-white {
+    color: #1a1a1a !important;
+}
+
+body.home-page.light-mode .btn-outline-light {
+    border-color: #1a1a1a;
+    color: #1a1a1a;
+}
+
+body.home-page.light-mode .btn-outline-light:hover {
+    background: #1a1a1a;
+    color: #ffffff;
+}
+
+body.home-page.light-mode .btn-danger {
+    background: #dc3545;
+    border-color: #dc3545;
+    color: #ffffff;
+}
+
+body.home-page.light-mode .btn-danger:hover {
+    background: #c82333;
+    border-color: #bd2130;
+}
+
 .dark-mode-toggle {
     position: fixed;
     top: 20px;
