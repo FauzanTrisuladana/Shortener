@@ -72,6 +72,14 @@ chmod -R 775 storage bootstrap/cache
 # chown -R USER:USER storage bootstrap/cache
 ```
 
+Catatan: Pada cPanel, folder `public_html/.well-known` dan file `public_html/.well-known/pki-validation/*` dikelola oleh AutoSSL/Let's Encrypt dan bisa dilindungi (immutable/owned oleh sistem). Hindari mengubah izin di path tersebut. Jika menjalankan perintah massal, kecualikan path itu, contoh:
+
+```bash
+# Jalankan dari root proyek Anda
+find . -type d -not -path "./public_html/.well-known*" -exec chmod 755 {} \;
+find . -type f -not -path "./public_html/.well-known*" -exec chmod 644 {} \;
+```
+
 ## .htaccess
 File `public/.htaccess` sudah berisi aturan standar Laravel untuk rewrite ke `index.php`. Pastikan modul `mod_rewrite` aktif.
 
