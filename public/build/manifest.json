@@ -55,5 +55,23 @@
       "assets/bootstrap-icons-mSm7cUeB.woff2",
       "assets/bootstrap-icons-BeopsB42.woff"
     ]
+  },
+  "resources/js/dashboard.js": {
+    "file": "assets/dashboard-B5mknnoR.js",
+    "name": "dashboard",
+    "src": "resources/js/dashboard.js",
+    "isEntry": true
+  },
+  "resources/js/home.js": {
+    "file": "assets/home-DkEQC9_e.js",
+    "name": "home",
+    "src": "resources/js/home.js",
+    "isEntry": true
+  },
+  "resources/js/layout-darkmode.js": {
+    "file": "assets/layout-darkmode-5amosrvX.js",
+    "name": "layout-darkmode",
+    "src": "resources/js/layout-darkmode.js",
+    "isEntry": true
   }
 }
