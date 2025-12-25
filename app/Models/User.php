@@ -12,15 +12,20 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $primaryKey = 'id_user';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
+        'profile_image',
+        'provider',
+        'id_provider',
     ];
 
     /**
@@ -44,5 +49,13 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Get the links for the user.
+     */
+    public function links()
+    {
+        return $this->hasMany(Link::class, 'id_user', 'id_user');
     }
 }

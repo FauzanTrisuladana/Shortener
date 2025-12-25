@@ -75,6 +75,42 @@
     </div>
 </div>
 
+<!-- Geographic Analytics -->
+<div class="row mb-4">
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title mb-4">Top 5 Countries</h5>
+                <div class="chart-container" style="height: 300px; position: relative;">
+                    <canvas id="countryChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title mb-4">Top 5 Cities</h5>
+                <div class="chart-container" style="height: 300px; position: relative;">
+                    <canvas id="cityChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title mb-4">Devices</h5>
+                <div class="chart-container" style="height: 300px; position: relative;">
+                    <canvas id="deviceChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Top Links Table -->
 <div class="row">
     <div class="col-12">
@@ -174,4 +210,155 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Country Chart
+    const countryCtx = document.getElementById('countryChart');
+    if (countryCtx) {
+        new Chart(countryCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Indonesia', 'United States', 'Malaysia', 'Singapore', 'Australia'],
+                datasets: [{
+                    data: [4520, 2891, 1456, 987, 623],
+                    backgroundColor: [
+                        '#667eea',
+                        '#f093fb',
+                        '#4facfe',
+                        '#43e97b',
+                        '#fa709a'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: {
+                                size: 12
+                            }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        padding: 12,
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.parsed.toLocaleString() + ' visitors';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // City Chart
+    const cityCtx = document.getElementById('cityChart');
+    if (cityCtx) {
+        new Chart(cityCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jakarta', 'New York', 'Kuala Lumpur', 'Singapore', 'Sydney'],
+                datasets: [{
+                    label: 'Visitors',
+                    data: [3245, 2134, 1289, 876, 543],
+                    backgroundColor: '#667eea',
+                    borderRadius: 8,
+                    barThickness: 40
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        padding: 12
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: '#6c757d',
+                            font: {
+                                size: 11
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: '#6c757d',
+                            font: {
+                                size: 11
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Device Chart
+    const deviceCtx = document.getElementById('deviceChart');
+    if (deviceCtx) {
+        new Chart(deviceCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Mobile', 'Desktop', 'Tablet'],
+                datasets: [{
+                    data: [6234, 5123, 1490],
+                    backgroundColor: ['#667eea', '#f093fb', '#4facfe'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: {
+                                size: 12
+                            }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        padding: 12,
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.parsed.toLocaleString() + ' visitors';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
+@endpush
 @endsection

@@ -20,4 +20,5 @@ Route::get('/auth/google/callback', [SocialiteController::class, 'handleGoogleCa
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
 Route::get('/links', [LinkController::class, 'index'])->name('links');
+Route::get('/links/{id}/analytics', [LinkController::class, 'analytics'])->name('link.analytics');
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');

@@ -10,4 +10,10 @@ class LinkController extends Controller
     {
         return view('links');
     }
+
+    public function analytics($id)
+    {
+        // TODO: Load link data from database
+        return view('link-analytics', compact('id'));
+    }
 }

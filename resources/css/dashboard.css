@@ -264,3 +264,18 @@ body.dashboard-layout .card {
 .dashboard-main {
     margin-left: 250px;
 }
+
+@media (max-width: 768px) {
+    .dashboard-main {
+        margin-left: 0;
+    }
+}
+
+/* Fix button text visibility in dark mode */
+body.dashboard-layout.dark-mode .btn-primary {
+    color: #ffffff !important;
+}
+
+body.dashboard-layout.dark-mode .btn-primary:hover {
+    color: #ffffff !important;
+}
