@@ -23,7 +23,7 @@
             <!-- Navbar / Header -->
             <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
                 <div class="container-fluid px-4">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
+                    <button class="navbar-toggler d-lg-none" type="button" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 

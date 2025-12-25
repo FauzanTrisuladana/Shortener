@@ -265,7 +265,7 @@ body.dashboard-layout .card {
     margin-left: 250px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .dashboard-main {
         margin-left: 0;
     }
@@ -278,4 +278,90 @@ body.dashboard-layout.dark-mode .btn-primary {
 
 body.dashboard-layout.dark-mode .btn-primary:hover {
     color: #ffffff !important;
+}
+
+/* Sidebar Styles */
+#sidebarMenu {
+    width: 250px;
+    background-color: #161615;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+#sidebarMenu .nav-link {
+    color: #A1A09A;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    padding: 12px 16px;
+    transition: all 0.2s ease;
+}
+
+#sidebarMenu .nav-link:hover {
+    background-color: #3E3E3A;
+    color: #EDEDEC;
+}
+
+#sidebarMenu .nav-link.active {
+    background-color: #FF4433;
+    color: white;
+}
+
+#sidebarMenu .nav-link i {
+    font-size: 18px;
+}
+
+#sidebarMenu hr {
+    border-color: #3E3E3A;
+}
+
+#sidebarCloseBtn {
+    background: none;
+    border: none;
+    color: #A1A09A;
+    font-size: 1.8rem;
+    margin-right: -8px;
+}
+
+.sidebar-brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.sidebar-user-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+}
+
+.sidebar-user-name {
+    font-size: 14px;
+}
+
+.sidebar-user-role {
+    font-size: 12px;
+    color: #A1A09A;
+}
+
+@media (max-width: 992px) {
+    #sidebarMenu {
+        position: fixed;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1050;
+        height: 100vh !important;
+    }
+
+    #sidebarMenu.show {
+        transform: translateX(0);
+    }
+}
+
+@media (min-width: 992px) {
+    #sidebarMenu {
+        transform: translateX(0) !important;
+    }
 }

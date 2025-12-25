@@ -25,4 +25,21 @@ document.addEventListener('DOMContentLoaded', function() {
         icon.classList.remove('bi-brightness-high');
         icon.classList.add('bi-moon-fill');
     }
+
+    // Sidebar toggle and close functionality
+    const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
+    const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+    const sidebarMenu = document.getElementById('sidebarMenu');
+
+    if (sidebarToggleBtn && sidebarMenu) {
+        sidebarToggleBtn.addEventListener('click', function() {
+            sidebarMenu.classList.toggle('show');
+        });
+    }
+
+    if (sidebarCloseBtn && sidebarMenu) {
+        sidebarCloseBtn.addEventListener('click', function() {
+            sidebarMenu.classList.remove('show');
+        });
+    }
 });

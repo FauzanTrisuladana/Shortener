@@ -26,7 +26,7 @@
     ]
   },
   "resources/css/dashboard.css": {
-    "file": "assets/dashboard-DBF1B96w.css",
+    "file": "assets/dashboard-CNuylzdf.css",
     "src": "resources/css/dashboard.css",
     "isEntry": true,
     "name": "dashboard",
@@ -69,7 +69,7 @@
     "isEntry": true
   },
   "resources/js/layout-darkmode.js": {
-    "file": "assets/layout-darkmode-5amosrvX.js",
+    "file": "assets/layout-darkmode-BS6rjoA4.js",
     "name": "layout-darkmode",
     "src": "resources/js/layout-darkmode.js",
     "isEntry": true

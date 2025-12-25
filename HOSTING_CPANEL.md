@@ -61,6 +61,11 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 php artisan optimize
+# ketika hosting ulang 
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
 ```
 
 ## Permission Folder

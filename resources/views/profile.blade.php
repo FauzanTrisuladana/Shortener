@@ -102,7 +102,7 @@
 
         <!-- Danger Zone Card -->
         <div class="card border-danger shadow-sm">
-            <div class="card-body p-4">
+            <div class="card-body m-4">
                 <h6 class="card-title text-danger mb-3">
                     <i class="bi bi-exclamation-triangle me-2"></i>
                     Danger Zone
