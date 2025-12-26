@@ -280,6 +280,10 @@ body.dashboard-layout.dark-mode .btn-primary:hover {
     color: #ffffff !important;
 }
 
+body.dark-mode .navbar-toggler .navbar-toggler-icon {
+    filter: invert(1) brightness(2);
+}
+
 /* Sidebar Styles */
 #sidebarMenu {
     width: 250px;
