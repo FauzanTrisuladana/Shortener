@@ -105,6 +105,10 @@
                     <a href="{{ route('register') }}" class="btn btn-danger">
                         <i class="bi bi-person-plus me-2"></i>Daftar Sekarang
                     </a>
+                    <!-- Tombol sementara ke dashboard -->
+                    <a href="{{ route('dashboard') }}" class="btn btn-primary ms-2">
+                        <i class="bi bi-speedometer2 me-2"></i>Dashboard (sementara)
+                    </a>
                 </div>
             </div>
         </div>
