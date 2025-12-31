@@ -75,6 +75,17 @@
                         <span>Login with Google</span>
                     </a>
 
+                    {{-- error --}}
+                    @if ($errors->any())
+                        <div class="alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <div class="text-center">
                         <span class="text-muted">Belum punya akun?</span>
                         <a href="{{ route('register') }}" class="text-decoration-none text-danger">

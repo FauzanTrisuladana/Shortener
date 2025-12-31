@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class SocialiteController extends Controller
 {
@@ -22,15 +24,22 @@ class SocialiteController extends Controller
     public function handleGoogleCallback()
     {
         try {
-            $googleUser = Socialite::driver('google')->user();
+            $googleUser = Socialite::driver('google')->stateless()->user();
 
-            // TODO: Find or create user in database
-            // For now, just redirect to dashboard
+            $user = User::firstOrCreate(
+                ['email' => $googleUser->getEmail()],
+                [
+                    'name' => $googleUser->getName() ?? $googleUser->getNickname(),
+                    'provider' => 'google',
+                    'id_provider' => $googleUser->getId(),
+                    'profile_image' => $googleUser->getAvatar(),
+                ]
+            );
 
-            return redirect()->route('dashboard')->with('success', 'Berhasil login dengan Google!');
-
+            Auth::login($user, true);
+            return redirect()->intended('dashboard');
         } catch (\Exception $e) {
-            return redirect()->route('login')->with('error', 'Gagal login dengan Google. Silakan coba lagi.');
+            return redirect('/login')->withErrors(['google' => 'Gagal login dengan Google.']);
         }
     }
 }

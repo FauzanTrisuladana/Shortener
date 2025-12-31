@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="custom_slug" class="form-label">Custom Slug (opsional)</label>
+                    <label for="custom_alias" class="form-label">Custom Alias (opsional)</label>
                     <div class="input-group">
                         <span class="input-group-text" style="background-color: #1a1a1a; border: 1px solid #3a3a3a; color: #6a6a6a; border-radius: 8px 0 0 8px;">
                             link.trisuladana.com/
@@ -70,15 +70,15 @@
                         <input
                             type="text"
                             class="form-control form-control-dark"
-                            id="custom_slug"
-                            name="custom_slug"
+                            id="custom_alias"
+                            name="custom_alias"
                             placeholder="url-custom"
-                            value="{{ old('custom_slug') }}"
+                            value="{{ old('custom_alias') }}"
                             style="border-radius: 0 8px 8px 0; border-left: none;"
                         >
                     </div>
                     <small class="info-text">Bisa dikosongkan, nanti dibikinin</small>
-                    @error('custom_slug')
+                    @error('custom_alias')
                         <small class="text-danger d-block mt-1">{{ $message }}</small>
                     @enderror
                 </div>
