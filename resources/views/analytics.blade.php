@@ -62,12 +62,31 @@
 <div class="row mb-4">
     <div class="col-12">
         <div class="card border-0 shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title mb-4">Click Activity</h5>
-                <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 300px;">
-                    <div class="text-center">
-                        <i class="bi bi-bar-chart fs-1 text-muted mb-3"></i>
-                        <p class="text-muted">Belum ada data untuk ditampilkan</p>
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="mb-0">Click Activity</h5>
+                    <div class="btn-group" role="group">
+                        <input type="radio" class="btn-check" name="timeRange" id="weekly" autocomplete="off" checked>
+                        <label class="btn btn-outline-secondary btn-sm" for="weekly">Mingguan</label>
+
+                        <input type="radio" class="btn-check" name="timeRange" id="monthly" autocomplete="off">
+                        <label class="btn btn-outline-secondary btn-sm" for="monthly">Bulanan</label>
+
+                        <input type="radio" class="btn-check" name="timeRange" id="yearly" autocomplete="off">
+                        <label class="btn btn-outline-secondary btn-sm" for="yearly">Tahunan</label>
+                    </div>
+                </div>
+                <div class="chart-container" style="height: 300px; position: relative;">
+                    <canvas id="clickActivityChart"></canvas>
+                </div>
+                <div class="chart-legend mt-3 d-flex justify-content-center gap-4">
+                    <div class="d-flex align-items-center">
+                        <div style="width: 20px; height: 3px; background: #667eea; margin-right: 8px;"></div>
+                        <span class="text-muted small">Total Clicks</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div style="width: 20px; height: 3px; background: #f093fb; margin-right: 8px;"></div>
+                        <span class="text-muted small">Unique Visitors</span>
                     </div>
                 </div>
             </div>
@@ -213,152 +232,6 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Country Chart
-    const countryCtx = document.getElementById('countryChart');
-    if (countryCtx) {
-        new Chart(countryCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Indonesia', 'United States', 'Malaysia', 'Singapore', 'Australia'],
-                datasets: [{
-                    data: [4520, 2891, 1456, 987, 623],
-                    backgroundColor: [
-                        '#667eea',
-                        '#f093fb',
-                        '#4facfe',
-                        '#43e97b',
-                        '#fa709a'
-                    ],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 15,
-                            font: {
-                                size: 12
-                            }
-                        }
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                        padding: 12,
-                        callbacks: {
-                            label: function(context) {
-                                return context.label + ': ' + context.parsed.toLocaleString() + ' visitors';
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-    // City Chart
-    const cityCtx = document.getElementById('cityChart');
-    if (cityCtx) {
-        new Chart(cityCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Jakarta', 'New York', 'Kuala Lumpur', 'Singapore', 'Sydney'],
-                datasets: [{
-                    label: 'Visitors',
-                    data: [3245, 2134, 1289, 876, 543],
-                    backgroundColor: '#667eea',
-                    borderRadius: 8,
-                    barThickness: 40
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                        padding: 12
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: 'rgba(0, 0, 0, 0.05)',
-                            drawBorder: false
-                        },
-                        ticks: {
-                            color: '#6c757d',
-                            font: {
-                                size: 11
-                            }
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false,
-                            drawBorder: false
-                        },
-                        ticks: {
-                            color: '#6c757d',
-                            font: {
-                                size: 11
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-    // Device Chart
-    const deviceCtx = document.getElementById('deviceChart');
-    if (deviceCtx) {
-        new Chart(deviceCtx, {
-            type: 'pie',
-            data: {
-                labels: ['Mobile', 'Desktop', 'Tablet'],
-                datasets: [{
-                    data: [6234, 5123, 1490],
-                    backgroundColor: ['#667eea', '#f093fb', '#4facfe'],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 15,
-                            font: {
-                                size: 12
-                            }
-                        }
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                        padding: 12,
-                        callbacks: {
-                            label: function(context) {
-                                return context.label + ': ' + context.parsed.toLocaleString() + ' visitors';
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    }
-});
-</script>
+@vite(['resources/js/dashboard.js', 'resources/js/analytics.js'])
 @endpush
 @endsection

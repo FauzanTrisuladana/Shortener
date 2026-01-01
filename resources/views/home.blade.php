@@ -40,7 +40,7 @@
             @endif
 
             <h4 class="text-white mb-2">Buat short URL</h4>
-            <p class="info-text mb-4">Masukin url panjang, nanti dapat url pendek, bisa custom slug juga</p>
+            <p class="info-text mb-4">Buat link panjang jadi pendek, bisa custom alias juga</p>
 
             <form action="{{ route('shorten') }}" method="POST">
                 @csrf
@@ -77,7 +77,7 @@
                             style="border-radius: 0 8px 8px 0; border-left: none;"
                         >
                     </div>
-                    <small class="info-text">Bisa dikosongkan, nanti dibikinin</small>
+                    <small class="info-text">Bisa dikosongkan, nanti dibuat random</small>
                     @error('custom_alias')
                         <small class="text-danger d-block mt-1">{{ $message }}</small>
                     @enderror
@@ -104,10 +104,6 @@
                     </a>
                     <a href="{{ route('register') }}" class="btn btn-danger">
                         <i class="bi bi-person-plus me-2"></i>Daftar Sekarang
-                    </a>
-                    <!-- Tombol sementara ke dashboard -->
-                    <a href="{{ route('dashboard') }}" class="btn btn-primary ms-2">
-                        <i class="bi bi-speedometer2 me-2"></i>Dashboard (sementara)
                     </a>
                 </div>
             </div>

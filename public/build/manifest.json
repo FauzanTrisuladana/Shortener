@@ -17,7 +17,7 @@
     ]
   },
   "resources/css/auth.css": {
-    "file": "assets/auth-B2-fMMMX.css",
+    "file": "assets/auth-Bk9zcn-I.css",
     "src": "resources/css/auth.css",
     "isEntry": true,
     "name": "auth",
@@ -35,13 +35,19 @@
     ]
   },
   "resources/css/home.css": {
-    "file": "assets/home-CsgTeSlZ.css",
+    "file": "assets/home-Sir9TC2Z.css",
     "src": "resources/css/home.css",
     "isEntry": true,
     "name": "home",
     "names": [
       "home.css"
     ]
+  },
+  "resources/js/analytics.js": {
+    "file": "assets/analytics-97izAMBZ.js",
+    "name": "analytics",
+    "src": "resources/js/analytics.js",
+    "isEntry": true
   },
   "resources/js/app.js": {
     "file": "assets/app-D7Fkmjlb.js",
@@ -55,6 +61,12 @@
       "assets/bootstrap-icons-mSm7cUeB.woff2",
       "assets/bootstrap-icons-BeopsB42.woff"
     ]
+  },
+  "resources/js/auth-darkmode.js": {
+    "file": "assets/auth-darkmode-CfbX7kBi.js",
+    "name": "auth-darkmode",
+    "src": "resources/js/auth-darkmode.js",
+    "isEntry": true
   },
   "resources/js/dashboard.js": {
     "file": "assets/dashboard-B5mknnoR.js",
@@ -72,6 +84,18 @@
     "file": "assets/layout-darkmode-BS6rjoA4.js",
     "name": "layout-darkmode",
     "src": "resources/js/layout-darkmode.js",
+    "isEntry": true
+  },
+  "resources/js/link-analytics.js": {
+    "file": "assets/link-analytics-B4BzmOqu.js",
+    "name": "link-analytics",
+    "src": "resources/js/link-analytics.js",
+    "isEntry": true
+  },
+  "resources/js/links.js": {
+    "file": "assets/links-l0sNRNKZ.js",
+    "name": "links",
+    "src": "resources/js/links.js",
     "isEntry": true
   }
 }

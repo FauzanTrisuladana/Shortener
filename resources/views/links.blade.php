@@ -305,12 +305,7 @@
     </div>
 </div>
 
-<script>
-function editLink(id, slug, name, url) {
-    document.getElementById('editLinkId').value = id;
-    document.getElementById('editCustomAlias').value = slug;
-    document.getElementById('editLinkName').value = name;
-    document.getElementById('editOriginalUrl').value = url;
-}
-</script>
+@push('scripts')
+@vite('resources/js/links.js')
+@endpush
 @endsection

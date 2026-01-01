@@ -29,7 +29,7 @@
                         </p>
                     </div>
                     <div class="col-md-4 text-md-end mt-3 mt-md-0">
-                        <button class="btn btn-outline-secondary">
+                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editLinkModal" onclick="editLink(1, 'promo-special', 'Promo Special Campaign', 'https://example.com/very-long-url-here/promo-special')">
                             <i class="bi bi-pencil me-2"></i>Edit
                         </button>
                     </div>
@@ -208,192 +208,132 @@
     </div>
 </div>
 
+<!-- Click Activity Table -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title mb-4">Recent Click Activity</h5>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Country</th>
+                                <th>City</th>
+                                <th>Device</th>
+                                <th>Browser</th>
+                                <th>Referrer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><small class="text-muted">2026-01-01 14:23:45</small></td>
+                                <td><i class="bi bi-flag me-1"></i>Indonesia</td>
+                                <td>Jakarta</td>
+                                <td><i class="bi bi-phone me-1"></i>Mobile</td>
+                                <td><i class="bi bi-browser-chrome text-warning me-1"></i>Chrome</td>
+                                <td><small class="text-muted">Direct</small></td>
+                            </tr>
+                            <tr>
+                                <td><small class="text-muted">2026-01-01 14:18:12</small></td>
+                                <td><i class="bi bi-flag me-1"></i>Indonesia</td>
+                                <td>Bandung</td>
+                                <td><i class="bi bi-laptop me-1"></i>Desktop</td>
+                                <td><i class="bi bi-browser-firefox text-danger me-1"></i>Firefox</td>
+                                <td><small class="text-muted">google.com</small></td>
+                            </tr>
+                            <tr>
+                                <td><small class="text-muted">2026-01-01 14:05:33</small></td>
+                                <td><i class="bi bi-flag me-1"></i>Malaysia</td>
+                                <td>Kuala Lumpur</td>
+                                <td><i class="bi bi-tablet me-1"></i>Tablet</td>
+                                <td><i class="bi bi-browser-safari text-primary me-1"></i>Safari</td>
+                                <td><small class="text-muted">facebook.com</small></td>
+                            </tr>
+                            <tr>
+                                <td><small class="text-muted">2026-01-01 13:52:18</small></td>
+                                <td><i class="bi bi-flag me-1"></i>Indonesia</td>
+                                <td>Surabaya</td>
+                                <td><i class="bi bi-phone me-1"></i>Mobile</td>
+                                <td><i class="bi bi-browser-chrome text-warning me-1"></i>Chrome</td>
+                                <td><small class="text-muted">twitter.com</small></td>
+                            </tr>
+                            <tr>
+                                <td><small class="text-muted">2026-01-01 13:41:05</small></td>
+                                <td><i class="bi bi-flag me-1"></i>Singapore</td>
+                                <td>Singapore</td>
+                                <td><i class="bi bi-laptop me-1"></i>Desktop</td>
+                                <td><i class="bi bi-browser-edge text-info me-1"></i>Edge</td>
+                                <td><small class="text-muted">linkedin.com</small></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center mt-3">
+                    <button class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-arrow-clockwise me-2"></i>Load More
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Click Activity Chart
-    const activityCtx = document.getElementById('clickActivityChart');
-    if (activityCtx) {
-        const weeklyData = {
-            labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'],
-            datasets: [{
-                label: 'Clicks',
-                data: [145, 178, 156, 201, 189, 167, 134],
-                borderColor: '#667eea',
-                backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                tension: 0.4,
-                fill: true,
-                borderWidth: 2
-            }]
-        };
-
-        const monthlyData = {
-            labels: Array.from({length: 30}, (_, i) => `${i + 1}`),
-            datasets: [{
-                label: 'Clicks',
-                data: [89, 112, 98, 145, 178, 156, 201, 189, 167, 134, 123, 145, 167, 189, 201, 178, 156, 134, 112, 98, 89, 101, 123, 145, 167, 189, 201, 178, 156, 134],
-                borderColor: '#667eea',
-                backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                tension: 0.4,
-                fill: true,
-                borderWidth: 2
-            }]
-        };
-
-        const allData = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Oct', 'Nov', 'Des'],
-            datasets: [{
-                label: 'Clicks',
-                data: [1234, 1456, 1789, 2012, 2345, 2678, 2901, 3123, 2890, 2567, 2234, 3245],
-                borderColor: '#667eea',
-                backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                tension: 0.4,
-                fill: true,
-                borderWidth: 2
-            }]
-        };
-
-        const activityChart = new Chart(activityCtx, {
-            type: 'line',
-            data: weeklyData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false,
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                        padding: 12
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: 'rgba(0, 0, 0, 0.05)',
-                            drawBorder: false
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        }
-                    }
-                }
-            }
-        });
-
-        // Handle time range changes
-        document.querySelectorAll('input[name="timeRange"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                if (this.id === 'weekly') {
-                    activityChart.data = weeklyData;
-                } else if (this.id === 'monthly') {
-                    activityChart.data = monthlyData;
-                } else if (this.id === 'all') {
-                    activityChart.data = allData;
-                }
-                activityChart.update();
-            });
-        });
-    }
-
-    // Country Chart
-    const countryCtx = document.getElementById('countryChart');
-    if (countryCtx) {
-        new Chart(countryCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Indonesia', 'USA', 'Malaysia', 'Singapore', 'Other'],
-                datasets: [{
-                    data: [1520, 891, 456, 287, 91],
-                    backgroundColor: ['#667eea', '#f093fb', '#4facfe', '#43e97b', '#cccccc'],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 10,
-                            font: { size: 11 }
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-    // City Chart
-    const cityCtx = document.getElementById('cityChart');
-    if (cityCtx) {
-        new Chart(cityCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Jakarta', 'NY', 'KL', 'SG', 'Sydney'],
-                datasets: [{
-                    data: [1245, 834, 429, 276, 187],
-                    backgroundColor: '#667eea',
-                    borderRadius: 6,
-                    barThickness: 30
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: { color: 'rgba(0, 0, 0, 0.05)' }
-                    },
-                    x: {
-                        grid: { display: false }
-                    }
-                }
-            }
-        });
-    }
-
-    // Device Chart
-    const deviceCtx = document.getElementById('deviceChart');
-    if (deviceCtx) {
-        new Chart(deviceCtx, {
-            type: 'pie',
-            data: {
-                labels: ['Mobile', 'Desktop', 'Tablet'],
-                datasets: [{
-                    data: [1892, 1123, 230],
-                    backgroundColor: ['#667eea', '#f093fb', '#4facfe'],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 10,
-                            font: { size: 11 }
-                        }
-                    }
-                }
-            }
-        });
-    }
-});
-</script>
+@vite('resources/js/link-analytics.js')
 @endpush
+
+<!-- Edit Link Modal -->
+<div class="modal fade" id="editLinkModal" tabindex="-1" aria-labelledby="editLinkModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="editLinkModalLabel">
+                    <i class="bi bi-pencil me-2"></i>
+                    Edit Link
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editLinkForm">
+                    <input type="hidden" id="editLinkId">
+                    <div class="mb-3">
+                        <label for="editOriginalUrl" class="form-label">Original URL</label>
+                        <input type="url" class="form-control" id="editOriginalUrl" placeholder="https://example.com/very-long-url">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editLinkName" class="form-label">Link Name</label>
+                        <input type="text" class="form-control" id="editLinkName" placeholder="My Campaign">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editCustomAlias" class="form-label">Custom Alias</label>
+                        <div class="input-group">
+                            <span class="input-group-text">link.trisuladana.com/</span>
+                            <input type="text" class="form-control" id="editCustomAlias" placeholder="my-link">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Status</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="editLinkStatus" checked>
+                            <label class="form-check-label" for="editLinkStatus">
+                                Active
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger">
+                    <i class="bi bi-check-circle me-2"></i>
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
