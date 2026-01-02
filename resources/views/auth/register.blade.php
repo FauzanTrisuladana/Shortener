@@ -30,7 +30,8 @@
                 <div class="card-auth">
                     <h4 class="text-white mb-4 text-center">Daftar Akun</h4>
 
-                    <form action="{{ route('dashboard') }}" method="GET">
+                    <form action="{{ route('register.submit') }}" method="POST">
+                        @csrf
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input
@@ -39,8 +40,10 @@
                                 id="username"
                                 name="username"
                                 placeholder="Username Anda"
+                                value="{{ old('username') }}"
                                 required
                             >
+                            <x-alert-input-error field="username" />
                         </div>
 
                         <div class="mb-3">
@@ -51,8 +54,10 @@
                                 id="email"
                                 name="email"
                                 placeholder="nama@email.com"
+                                value="{{ old('email') }}"
                                 required
                             >
+                            <x-alert-input-error field="email" />
                         </div>
 
                         <div class="mb-3">
@@ -65,6 +70,7 @@
                                 placeholder="••••••••"
                                 required
                             >
+                            <x-alert-input-error field="password" />
                         </div>
 
                         <div class="mb-4">
@@ -77,7 +83,12 @@
                                 placeholder="••••••••"
                                 required
                             >
+                            <x-alert-input-error field="password" />
                         </div>
+
+                        @if ($errors->has('form'))
+                            <x-alert-error :message="$errors->first('form')" />
+                        @endif
 
                         <button type="submit" class="btn btn-danger w-100 mb-3" style="padding: 12px;">
                             <i class="bi bi-person-plus me-2"></i>

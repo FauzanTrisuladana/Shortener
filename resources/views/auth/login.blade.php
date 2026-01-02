@@ -30,7 +30,8 @@
                 <div class="card-auth">
                     <h4 class="text-white mb-4 text-center">Login</h4>
 
-                    <form action="{{ route('dashboard') }}" method="GET">
+                    <form action="{{ route('login.submit') }}" method="POST">
+                        @csrf
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input
@@ -55,6 +56,15 @@
                             >
                         </div>
 
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                            <label class="form-check-label" for="remember">Ingat saya</label>
+                        </div>
+
+                        @if ($errors->has('form'))
+                            <x-alert-error :message="$errors->first('form')" />
+                        @endif
+
                         <button type="submit" class="btn btn-danger w-100 mb-3" style="padding: 12px;">
                             <i class="bi bi-box-arrow-in-right me-2"></i>
                             Login
@@ -77,17 +87,6 @@
                         </svg>
                         <span>Login with Google</span>
                     </a>
-
-                    {{-- error --}}
-                    @if ($errors->any())
-                        <div class="alert-danger">
-                            <ul class="mb-0">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
 
                     <div class="text-center">
                         <span class="text-muted">Belum punya akun?</span>

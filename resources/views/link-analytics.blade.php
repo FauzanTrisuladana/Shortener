@@ -310,7 +310,7 @@
                     <div class="mb-3">
                         <label for="editCustomAlias" class="form-label">Custom Alias</label>
                         <div class="input-group">
-                            <span class="input-group-text">link.trisuladana.com/</span>
+                            <span class="input-group-text">{{ rtrim(config('app.url'), '/') . '/' }}</span>
                             <input type="text" class="form-control" id="editCustomAlias" placeholder="my-link">
                         </div>
                     </div>

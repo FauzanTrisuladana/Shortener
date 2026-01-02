@@ -15,24 +15,28 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
-        $validator = Validator::make($credentials, [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        try {
+            $credentials = $request->only('email', 'password');
+            $validator = Validator::make($credentials, [
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            if ($validator->fails()) {
+                return back()->withErrors($validator)->withInput();
+            }
+
+            if (Auth::attempt($credentials, $request->filled('remember'))) {
+                $request->session()->regenerate();
+                return redirect()->intended('dashboard');
+            }
+
+            return back()->withErrors([
+                'form' => 'Email atau password salah.',
+            ])->withInput();
+        } catch (\Exception $e) {
+            return back()->withErrors(['form' => "Gagal login."])->withInput();
         }
-
-        if (Auth::attempt($credentials, $request->filled('remember'))) {
-            $request->session()->regenerate();
-            return redirect()->intended('dashboard');
-        }
-
-        return back()->withErrors([
-            'form' => 'Email atau password salah.',
-        ])->withInput();
     }
 
     /**
@@ -90,7 +94,7 @@ class AuthController extends Controller
         } catch (\Illuminate\Validation\ValidationException $e) {
             return back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
-            return back()->withErrors(['form' => "Gagal mendaftar."])->withInput();
+            return back()->withErrors(['form' => "Gagal mendaftar: " . $e->getMessage() . ", Silahkan coba lagi"])->withInput();
         }
     }
 

@@ -97,6 +97,25 @@ body.dashboard-layout.dark-mode .modal-footer {
     border-color: #3a3a3a;
 }
 
+body.dashboard-layout.dark-mode .dropdown-menu {
+    background-color: #2a2a2a;
+    border-color: #3a3a3a;
+}
+
+body.dashboard-layout.dark-mode .dropdown-item {
+    color: #ffffff;
+}
+
+body.dashboard-layout.dark-mode .dropdown-item:hover,
+body.dashboard-layout.dark-mode .dropdown-item:focus {
+    background-color: #3a3a3a;
+    color: #0d6efd;
+}
+
+body.dashboard-layout.dark-mode .dropdown-divider {
+    border-color: #3a3a3a;
+}
+
 body.dashboard-layout.dark-mode .table-hover tbody tr:hover {
     background-color: rgba(255, 255, 255, 0.05);
 }

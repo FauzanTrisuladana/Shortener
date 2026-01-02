@@ -25,22 +25,8 @@
         </div>
 
         <div class="card-home">
-            @if(session('success'))
-            <div class="alert-success">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <strong><i class="bi bi-check-circle me-2"></i>URL berhasil diperpendek!</strong>
-                </div>
-                <div class="short-url-result">
-                    <a href="{{ session('short_url') }}" target="_blank">{{ session('short_url') }}</a>
-                    <button class="btn-copy" onclick="copyToClipboard('{{ session('short_url') }}')">
-                        <i class="bi bi-clipboard"></i> Copy
-                    </button>
-                </div>
-            </div>
-            @endif
-
             <h4 class="text-white mb-2">Buat short URL</h4>
-            <p class="info-text mb-4">Buat link panjang jadi pendek, bisa custom alias juga</p>
+            <p class="info-text mb-4">Buat link panjang jadi pendek</p>
 
             <form action="{{ route('shorten') }}" method="POST">
                 @csrf
@@ -55,17 +41,21 @@
                         placeholder="https://trisuladana.com/url-yang-panjang-atau-apalah"
                         required
                         value="{{ old('target_url') }}"
+                        required
                     >
                     @error('target_url')
-                        <small class="text-danger">{{ $message }}</small>
+                        <x-alert-input-error field="target_url" />
                     @enderror
                 </div>
 
                 <div class="mb-4">
-                    <label for="custom_alias" class="form-label">Custom Alias (opsional)</label>
+                    <label for="custom_alias" class="form-label">
+                        Custom Alias (opsional)
+                        <small class="info-text">*Bisa dikosongkan, nanti dibuat random</small>
+                    </label>
                     <div class="input-group">
                         <span class="input-group-text" style="background-color: #1a1a1a; border: 1px solid #3a3a3a; color: #6a6a6a; border-radius: 8px 0 0 8px;">
-                            link.trisuladana.com/
+                            {{ rtrim(config('app.url'), '/') . '/' }}
                         </span>
                         <input
                             type="text"
@@ -77,11 +67,20 @@
                             style="border-radius: 0 8px 8px 0; border-left: none;"
                         >
                     </div>
-                    <small class="info-text">Bisa dikosongkan, nanti dibuat random</small>
                     @error('custom_alias')
-                        <small class="text-danger d-block mt-1">{{ $message }}</small>
+                        <x-alert-input-error field="custom_alias" />
                     @enderror
                 </div>
+
+                {{-- Error --}}
+                @if ($errors->any('form'))
+                    <x-alert-error :message="$errors->first('form')" />
+                @endif
+
+                {{-- Success --}}
+                @if(session('success'))
+                    <x-short-url-success :url="session('short_url')" />
+                @endif
 
                 <button type="submit" class="btn btn-shorten">
                     Shorten URL

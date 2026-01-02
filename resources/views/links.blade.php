@@ -236,7 +236,7 @@
                     <div class="mb-3">
                         <label for="customAlias" class="form-label">Custom Alias (Optional)</label>
                         <div class="input-group">
-                            <span class="input-group-text">link.trisuladana.com/</span>
+                            <span class="input-group-text">{{ rtrim(config('app.url'), '/') . '/' }}</span>
                             <input type="text" class="form-control" id="customAlias" placeholder="my-link">
                         </div>
                         <small class="text-muted">Leave empty for random alias</small>
@@ -279,7 +279,7 @@
                     <div class="mb-3">
                         <label for="editCustomAlias" class="form-label">Custom Alias</label>
                         <div class="input-group">
-                            <span class="input-group-text">link.trisuladana.com/</span>
+                            <span class="input-group-text">{{ rtrim(config('app.url'), '/') . '/' }}</span>
                             <input type="text" class="form-control" id="editCustomAlias" placeholder="my-link">
                         </div>
                     </div>
