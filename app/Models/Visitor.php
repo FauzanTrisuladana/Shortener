@@ -13,6 +13,9 @@ class Visitor extends Model
     protected $fillable = [
         'id_link',
         'ip_address',
+        'browser',
+        'referrer',
+        'device',
         'country',
         'city',
         'user_agent',

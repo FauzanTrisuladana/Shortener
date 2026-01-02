@@ -106,16 +106,6 @@
                 <div class="chart-container" style="height: 300px; position: relative;">
                     <canvas id="clickActivityChart"></canvas>
                 </div>
-                <div class="chart-legend mt-3 d-flex justify-content-center gap-4">
-                    <div class="d-flex align-items-center">
-                        <div style="width: 20px; height: 3px; background: #667eea; margin-right: 8px;"></div>
-                        <span class="text-muted small">Total Clicks</span>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <div style="width: 20px; height: 3px; background: #f093fb; margin-right: 8px;"></div>
-                        <span class="text-muted small">Unique Visitors</span>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
