@@ -35,6 +35,12 @@ class SocialiteController extends Controller
                     'profile_image' => $googleUser->getAvatar(),
                 ]
             );
+            // Update data setiap login
+            $user->update([
+                'name' => $googleUser->getName() ?? $googleUser->getNickname(),
+                'profile_image' => $googleUser->getAvatar(),
+                'id_provider' => $googleUser->getId(),
+            ]);
 
             Auth::login($user, true);
             return redirect()->intended('dashboard');

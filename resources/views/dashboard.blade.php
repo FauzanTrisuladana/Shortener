@@ -60,7 +60,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div>
                         <p class="text-muted mb-1">Visitors</p>
-                        <h2 class="mb-0">2,847</h2>
+                        <h2 class="mb-0">{{ number_format($totalVisitors) }}</h2>
                     </div>
                     <div class="bg-danger bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
                         <i class="bi bi-people-fill text-danger fs-4"></i>
@@ -76,7 +76,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div>
                         <p class="text-muted mb-1">Unique Visitor</p>
-                        <h2 class="mb-0">1,923</h2>
+                        <h2 class="mb-0">{{ number_format($uniqueVisitors) }}</h2>
                     </div>
                     <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
                         <i class="bi bi-person-fill text-primary fs-4"></i>
@@ -95,14 +95,14 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h5 class="mb-0">Click Activity</h5>
                     <div class="btn-group" role="group">
-                        <input type="radio" class="btn-check" name="timeRange" id="weekly" autocomplete="off" checked>
-                        <label class="btn btn-outline-secondary btn-sm" for="weekly">Mingguan</label>
+                        <input type="radio" class="btn-check" name="timeRange" id="sevenDays" autocomplete="off" checked>
+                        <label class="btn btn-outline-secondary btn-sm" for="sevenDays">7 Hari</label>
 
-                        <input type="radio" class="btn-check" name="timeRange" id="monthly" autocomplete="off">
-                        <label class="btn btn-outline-secondary btn-sm" for="monthly">Bulanan</label>
+                        <input type="radio" class="btn-check" name="timeRange" id="thirtyDays" autocomplete="off">
+                        <label class="btn btn-outline-secondary btn-sm" for="thirtyDays">30 Hari</label>
 
-                        <input type="radio" class="btn-check" name="timeRange" id="yearly" autocomplete="off">
-                        <label class="btn btn-outline-secondary btn-sm" for="yearly">Tahunan</label>
+                        <input type="radio" class="btn-check" name="timeRange" id="allTime" autocomplete="off">
+                        <label class="btn btn-outline-secondary btn-sm" for="allTime">Semua</label>
                     </div>
                 </div>
                 <div class="chart-container" style="height: 300px; position: relative;">
@@ -143,6 +143,25 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+    window.chartData = {
+        sevenDays: {
+            labels: @json($chart7Labels),
+            data: @json($chart7Data),
+            uniqueData: @json($chart7UniqueData)
+        },
+        thirtyDays: {
+            labels: @json($chart30Labels),
+            data: @json($chart30Data),
+            uniqueData: @json($chart30UniqueData)
+        },
+        allTime: {
+            labels: @json($chartAllLabels),
+            data: @json($chartAllData),
+            uniqueData: @json($chartAllUniqueData)
+        }
+    };
+</script>
 @vite('resources/js/dashboard.js')
 @endpush
 @endsection

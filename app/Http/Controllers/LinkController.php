@@ -102,7 +102,7 @@ class LinkController extends Controller
                 $userId
             );
 
-            if (!$result['success']) {
+            if ($result['status'] !== 'success') {
                 throw new \Exception('Gagal memperpendek URL.');
             }
 
@@ -129,8 +129,8 @@ class LinkController extends Controller
                 'is_active' => $is_active,
             ]);
             return [
+                'status' => 'success',
                 'short_url' => url('/' . $new_link),
-                'success' => true,
             ];
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -190,6 +190,16 @@ class LinkController extends Controller
         } catch (\Exception $e) {
             return back()->withErrors(['delete' => "Terjadi kesalahan: " . $e->getMessage() . ". Silakan coba lagi."]);
         }
+    }
+
+    public static function getUserLinkIds($userId)
+    {
+        return Link::where('id_user', $userId)->pluck('id_link');
+    }
+
+    public static function getAllLinks($userId)
+    {
+        return Link::where('id_user', $userId)->get();
     }
 
     public function redirect(Request $request, $new_link)

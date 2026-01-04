@@ -5,13 +5,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (!ctx) return; // Exit if chart element not found
 
-    // Sample data
-    const weeklyData = {
-        labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'],
+    // Get data from backend
+    const sevenDaysData = {
+        labels: window.chartData.sevenDays.labels,
         datasets: [
             {
                 label: 'Total Clicks',
-                data: [245, 312, 289, 376, 423, 398, 287],
+                data: window.chartData.sevenDays.data,
                 borderColor: '#667eea',
                 backgroundColor: 'rgba(102, 126, 234, 0.1)',
                 tension: 0.4,
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             {
                 label: 'Unique Visitors',
-                data: [198, 267, 234, 298, 356, 321, 249],
+                data: window.chartData.sevenDays.uniqueData,
                 borderColor: '#f093fb',
                 backgroundColor: 'rgba(240, 147, 251, 0.1)',
                 tension: 0.4,
@@ -30,12 +30,12 @@ document.addEventListener('DOMContentLoaded', function() {
         ]
     };
 
-    const monthlyData = {
-        labels: Array.from({length: 30}, (_, i) => `${i + 1}`),
+    const thirtyDaysData = {
+        labels: window.chartData.thirtyDays.labels,
         datasets: [
             {
                 label: 'Total Clicks',
-                data: [234, 267, 312, 289, 345, 398, 423, 387, 456, 489, 512, 478, 445, 498, 523, 567, 534, 489, 512, 545, 578, 601, 567, 534, 489, 456, 423, 398, 367, 334],
+                data: window.chartData.thirtyDays.data,
                 borderColor: '#667eea',
                 backgroundColor: 'rgba(102, 126, 234, 0.1)',
                 tension: 0.4,
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             {
                 label: 'Unique Visitors',
-                data: [189, 223, 267, 234, 289, 334, 356, 323, 378, 412, 434, 398, 367, 412, 445, 478, 445, 412, 434, 467, 489, 512, 478, 445, 412, 378, 356, 334, 312, 289],
+                data: window.chartData.thirtyDays.uniqueData,
                 borderColor: '#f093fb',
                 backgroundColor: 'rgba(240, 147, 251, 0.1)',
                 tension: 0.4,
@@ -54,12 +54,12 @@ document.addEventListener('DOMContentLoaded', function() {
         ]
     };
 
-    const yearlyData = {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Oct', 'Nov', 'Des'],
+    const allTimeData = {
+        labels: window.chartData.allTime.labels,
         datasets: [
             {
                 label: 'Total Clicks',
-                data: [4234, 5123, 6789, 7234, 8456, 9123, 10234, 11456, 9876, 8765, 7654, 8234],
+                data: window.chartData.allTime.data,
                 borderColor: '#667eea',
                 backgroundColor: 'rgba(102, 126, 234, 0.1)',
                 tension: 0.4,
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             {
                 label: 'Unique Visitors',
-                data: [3456, 4234, 5678, 6123, 7234, 7890, 8456, 9123, 8234, 7345, 6456, 6890],
+                data: window.chartData.allTime.uniqueData,
                 borderColor: '#f093fb',
                 backgroundColor: 'rgba(240, 147, 251, 0.1)',
                 tension: 0.4,
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const config = {
         type: 'line',
-        data: weeklyData,
+        data: sevenDaysData,
         options: {
             responsive: true,
             maintainAspectRatio: false,
@@ -144,14 +144,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle time range changes
     document.querySelectorAll('input[name="timeRange"]').forEach(radio => {
-        console.log(radio.id);
         radio.addEventListener('change', function() {
-            if (this.id === 'weekly') {
-                chart.data = weeklyData;
-            } else if (this.id === 'monthly') {
-                chart.data = monthlyData;
-            } else if (this.id === 'yearly') {
-                chart.data = yearlyData;
+            if (this.id === 'sevenDays') {
+                chart.data = sevenDaysData;
+            } else if (this.id === 'thirtyDays') {
+                chart.data = thirtyDaysData;
+            } else if (this.id === 'allTime') {
+                chart.data = allTimeData;
             }
             chart.update();
         });

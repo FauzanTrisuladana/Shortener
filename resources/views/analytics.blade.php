@@ -66,14 +66,14 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h5 class="mb-0">Click Activity</h5>
                     <div class="btn-group" role="group">
-                        <input type="radio" class="btn-check" name="timeRange" id="weekly" autocomplete="off" checked>
-                        <label class="btn btn-outline-secondary btn-sm" for="weekly">Mingguan</label>
+                        <input type="radio" class="btn-check" name="timeRange" id="sevenDays" autocomplete="off" checked>
+                        <label class="btn btn-outline-secondary btn-sm" for="sevenDays">7 Hari</label>
 
-                        <input type="radio" class="btn-check" name="timeRange" id="monthly" autocomplete="off">
-                        <label class="btn btn-outline-secondary btn-sm" for="monthly">Bulanan</label>
+                        <input type="radio" class="btn-check" name="timeRange" id="thirtyDays" autocomplete="off">
+                        <label class="btn btn-outline-secondary btn-sm" for="thirtyDays">30 Hari</label>
 
-                        <input type="radio" class="btn-check" name="timeRange" id="yearly" autocomplete="off">
-                        <label class="btn btn-outline-secondary btn-sm" for="yearly">Tahunan</label>
+                        <input type="radio" class="btn-check" name="timeRange" id="allTime" autocomplete="off">
+                        <label class="btn btn-outline-secondary btn-sm" for="allTime">Semua</label>
                     </div>
                 </div>
                 <div class="chart-container" style="height: 300px; position: relative;">
@@ -152,66 +152,6 @@
                                 <td>15 Des 2025</td>
                                 <td><span class="badge bg-success">Active</span></td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-link-45deg text-primary me-2"></i>
-                                        <div>
-                                            <a href="#" class="text-decoration-none">link.trisuladana.com/campaign-2024</a>
-                                            <br>
-                                            <small class="text-muted">https://marketing.site/campaign...</small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td><strong>2,891</strong></td>
-                                <td>12 Des 2025</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-link-45deg text-primary me-2"></i>
-                                        <div>
-                                            <a href="#" class="text-decoration-none">link.trisuladana.com/webinar-tech</a>
-                                            <br>
-                                            <small class="text-muted">https://events.com/webinar-tech...</small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td><strong>2,456</strong></td>
-                                <td>10 Des 2025</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-link-45deg text-primary me-2"></i>
-                                        <div>
-                                            <a href="#" class="text-decoration-none">link.trisuladana.com/product-launch</a>
-                                            <br>
-                                            <small class="text-muted">https://shop.com/new-product...</small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td><strong>1,987</strong></td>
-                                <td>8 Des 2025</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-link-45deg text-primary me-2"></i>
-                                        <div>
-                                            <a href="#" class="text-decoration-none">link.trisuladana.com/portfolio</a>
-                                            <br>
-                                            <small class="text-muted">https://portfolio.design/showcase...</small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td><strong>1,268</strong></td>
-                                <td>5 Des 2025</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -222,6 +162,25 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+    window.chartData = {
+        sevenDays: {
+            labels: @json($chart7Labels),
+            data: @json($chart7Data),
+            uniqueData: @json($chart7UniqueData)
+        },
+        thirtyDays: {
+            labels: @json($chart30Labels),
+            data: @json($chart30Data),
+            uniqueData: @json($chart30UniqueData)
+        },
+        allTime: {
+            labels: @json($chartAllLabels),
+            data: @json($chartAllData),
+            uniqueData: @json($chartAllUniqueData)
+        }
+    };
+</script>
 @vite(['resources/js/dashboard.js', 'resources/js/analytics.js'])
 @endpush
 @endsection
