@@ -55,14 +55,9 @@ class LinkController extends Controller
                 'custom_alias.unique' => 'Alias khusus sudah digunakan. Silakan pilih yang lain.',
             ]);
 
-            $userId = auth()->check() ? auth()->id() : null;
-
             $result = self::storeshorten(
                 $link['target_url'],
                 $link['custom_alias'] ?? null,
-                true,
-                null,
-                $userId
             );
 
             if (!$result['success']) {
