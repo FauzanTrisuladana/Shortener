@@ -64,7 +64,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
      */
     Route::prefix('links')->group(function () {
         Route::get('/', [LinkController::class, 'index'])->name('links');
-	    Route::get('/{id}/analytics', [LinkController::class, 'analytics'])->name('link.analytics');
+	    Route::get('/{id}/analytics', [LinkController::class, 'analytics'])->name('links.analytics');
         Route::post('/store', [LinkController::class, 'shortenwaccount'])->name('links.store');
         Route::post('/{id}/update', [LinkController::class, 'update'])->name('links.update');
         Route::delete('/{id}', [LinkController::class, 'destroy'])->name('links.destroy');

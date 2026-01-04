@@ -133,7 +133,7 @@
     <div class="col-md-4 mb-4">
         <div class="card border-0 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title mb-4">Top Countries</h5>
+                <h5 class="card-title mb-4">Top 5 Countries</h5>
                 <div class="chart-container" style="height: 250px; position: relative;">
                     <canvas id="countryChart"></canvas>
                 </div>
@@ -144,7 +144,7 @@
     <div class="col-md-4 mb-4">
         <div class="card border-0 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title mb-4">Top Cities</h5>
+                <h5 class="card-title mb-4">Top 5 Cities</h5>
                 <div class="chart-container" style="height: 250px; position: relative;">
                     <canvas id="cityChart"></canvas>
                 </div>

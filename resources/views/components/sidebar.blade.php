@@ -5,6 +5,9 @@
     </button>
     <!-- Logo / Brand -->
     <a href="{{ route('dashboard') }}" class="d-flex align-items-center mb-4 text-white text-decoration-none">
+        <div class="bg-danger rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px;">
+            <span style="font-size: 20px;">🔗</span>
+        </div>
         <span class="sidebar-brand">Link Shortener</span>
     </a>
 
@@ -25,7 +28,7 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('links') }}" class="nav-link text-white {{ request()->routeIs('links') ? 'active' : '' }}">
+            <a href="{{ route('links') }}" class="nav-link text-white {{ request()->routeIs('links*') ? 'active' : '' }}">
                 <i class="bi bi-link-45deg me-2"></i>
                 Links
             </a>
@@ -45,12 +48,19 @@
     <hr>
     <div class="dropdown">
         <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            <div class="bg-danger text-white rounded-circle d-flex align-items-center justify-content-center me-2 sidebar-user-avatar">
-                FT
-            </div>
+            @if(auth()->user()->profile_image ?? false)
+                @if(Str::startsWith(auth()->user()->profile_image, ['http://', 'https://']))
+                    <img src="{{ auth()->user()->profile_image }}" alt="Avatar" class="rounded-circle me-2" style="width: 32px; height: 32px; object-fit: cover;">
+                @else
+                    <img src="{{ asset(auth()->user()->profile_image) }}" alt="Avatar" class="rounded-circle me-2" style="width: 32px; height: 32px; object-fit: cover;">
+                @endif
+            @else
+                <div class="bg-danger text-white rounded-circle d-flex align-items-center justify-content-center me-2 sidebar-user-avatar">
+                    {{ strtoupper(collect(explode(' ', auth()->user()->name))->map(fn($n) => substr($n,0,1))->join('')) }}
+                </div>
+            @endif
             <div>
-                <strong class="sidebar-user-name">Fauzan Trisuladana</strong>
-                <p class="mb-0 sidebar-user-role">Free User</p>
+                <strong class="sidebar-user-name">{{ auth()->user()->name }}</strong>
             </div>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark w-100">

@@ -99,7 +99,7 @@
                                     <button class="btn btn-sm btn-outline-secondary m-1" title="Edit" data-bs-toggle="modal" data-bs-target="#editLinkModal{{ $link->id_link }}">
                                         <i class="bi bi-pencil"></i>
                                     </button>
-                                    <a href="{{ route('link.analytics', $link->id_link) }}" class="btn btn-sm btn-outline-primary m-1" title="Analytics">
+                                    <a href="{{ route('links.analytics', $link->id_link) }}" class="btn btn-sm btn-outline-primary m-1" title="Analytics">
                                         <i class="bi bi-bar-chart"></i>
                                     </a>
                                     <form action="{{ route('links.destroy', $link->id_link) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus link ini?');">
@@ -308,7 +308,7 @@
 <script>
     // Auto-open modal if there are errors
     document.addEventListener('DOMContentLoaded', function() {
-        @if($errors->hasBag('new'))
+        @if($errors->hasBag('new') || isset($newopened))
             var createModal = new bootstrap.Modal(document.getElementById('createLinkModal'));
             createModal.show();
         @endif

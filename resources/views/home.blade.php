@@ -25,7 +25,7 @@
         </div>
 
         <div class="card-home">
-            <h4 class="text-white mb-2">Buat short URL</h4>
+            <h4 class="text-white mb-2">Buat short URL (Guest Mode)</h4>
             <p class="info-text mb-4">Buat link panjang jadi pendek</p>
 
             <form action="{{ route('shorten') }}" method="POST">

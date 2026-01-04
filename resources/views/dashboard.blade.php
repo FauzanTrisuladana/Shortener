@@ -12,20 +12,22 @@
 <!-- Quick Access Cards -->
 <div class="row mb-4">
     <div class="col-md-6 mb-3">
-        <div class="card border-0 shadow-sm" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
-            <div class="card-body p-4">
-                <div class="d-flex align-items-center justify-content-between">
-                    <div>
-                        <h5 class="card-title mb-2">
-                            <i class="bi bi-link-45deg me-2"></i>
-                            Short new Link
-                        </h5>
-                        <p class="card-text mb-0 opacity-75">Buat link pendek baru</p>
+        <a href="{{ route('links', ['newopened' => 1]) }}" class="text-decoration-none">
+            <div class="card border-0 shadow-sm h-100" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; cursor:pointer;">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h5 class="card-title mb-2">
+                                <i class="bi bi-link-45deg me-2"></i>
+                                Short new Link
+                            </h5>
+                            <p class="card-text mb-0 opacity-75">Buat link pendek baru</p>
+                        </div>
+                        <i class="bi bi-arrow-right-circle fs-1"></i>
                     </div>
-                    <i class="bi bi-arrow-right-circle fs-1"></i>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-md-6 mb-3">

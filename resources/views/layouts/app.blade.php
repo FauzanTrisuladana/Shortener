@@ -36,9 +36,17 @@
                         </button>
                         <div class="dropdown">
                             <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                <span class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
-                                    FT
-                                </span>
+                                @if(auth()->user()->profile_image ?? false)
+                                    @if(Str::startsWith(auth()->user()->profile_image, ['http://', 'https://']))
+                                        <img src="{{ auth()->user()->profile_image }}" alt="Avatar" class="rounded-circle" style="width: 32px; height: 32px; object-fit: cover;">
+                                    @else
+                                        <img src="{{ asset(auth()->user()->profile_image) }}" alt="Avatar" class="rounded-circle" style="width: 32px; height: 32px; object-fit: cover;">
+                                    @endif
+                                @else
+                                    <span class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                        {{ strtoupper(collect(explode(' ', auth()->user()->name))->map(fn($n) => substr($n,0,1))->join('')) }}
+                                    </span>
+                                @endif
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>

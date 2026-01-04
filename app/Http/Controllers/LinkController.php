@@ -33,7 +33,8 @@ class LinkController extends Controller
         }
 
         $links = $query->orderBy('created_at', 'desc')->get();
-        return view('links', compact('links'));
+        $newopened = $request->get('newopened', null);
+        return view('links', compact('links', 'newopened'));
     }
 
     public function analytics($id)
