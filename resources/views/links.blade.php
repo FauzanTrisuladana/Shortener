@@ -235,7 +235,9 @@
                             name="target_url"
                             value="{{ $link->true_link }}"
                             placeholder="https://example.com/very-long-url">
-                        <x-alert-input-error field="target_url" errorBag="edit" />
+                        @if (session('id')==$link->id_link && $errors->edit->has('target_url'))
+                            <x-alert-input-error field="target_url" errorBag="edit" />
+                        @endif
                     </div>
                     <div class="mb-3">
                         <label for="editLinkName{{ $link->id_link }}" class="form-label">Link Name</label>
@@ -246,7 +248,9 @@
                             name="name"
                             value="{{ $link->name }}"
                             placeholder="My Campaign">
-                        <x-alert-input-error field="name" errorBag="edit" />
+                        @if (session('id')==$link->id_link && $errors->edit->has('name'))
+                            <x-alert-input-error field="name" errorBag="edit" />
+                        @endif
                     </div>
                     <div class="mb-3">
                         <label for="editCustomAlias{{ $link->id_link }}" class="form-label">Custom Alias</label>
@@ -260,7 +264,9 @@
                                 value="{{ $link->new_link }}"
                                 placeholder="my-link">
                         </div>
-                        <x-alert-input-error field="custom_alias" errorBag="edit" />
+                        @if (session('id')==$link->id_link && $errors->edit->has('custom_alias'))
+                            <x-alert-input-error field="custom_alias" errorBag="edit" />
+                        @endif
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Status</label>
@@ -276,9 +282,14 @@
                                 Active
                             </label>
                         </div>
-                        <x-alert-input-error field="is_active" errorBag="edit" />
+                        @if (session('id')==$link->id_link && $errors->edit->has('is_active'))
+                            <x-alert-input-error field="is_active" errorBag="edit" />
+                        @endif
                     </div>
                 </form>
+                @if (session('id')==$link->id_link && $errors->edit->has('form'))
+                    <x-alert-error :message="$errors->edit->first('form')" />
+                @endif
             </div>
             <div class="modal-footer border-0">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>

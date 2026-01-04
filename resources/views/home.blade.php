@@ -43,9 +43,7 @@
                         value="{{ old('target_url') }}"
                         required
                     >
-                    @error('target_url')
-                        <x-alert-input-error field="target_url" />
-                    @enderror
+                    <x-alert-input-error field="target_url" />
                 </div>
 
                 <div class="mb-4">
@@ -67,15 +65,13 @@
                             style="border-radius: 0 8px 8px 0; border-left: none;"
                         >
                     </div>
-                    @error('custom_alias')
-                        <x-alert-input-error field="custom_alias" />
-                    @enderror
+                    <x-alert-input-error field="custom_alias" />
                 </div>
 
                 {{-- Error --}}
-                @if ($errors->any('form'))
+                @error('form')
                     <x-alert-error :message="$errors->first('form')" />
-                @endif
+                @enderror
 
                 {{-- Success --}}
                 @if(session('success'))

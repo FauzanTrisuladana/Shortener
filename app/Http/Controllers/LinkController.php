@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Link;
+use App\Http\Controllers\VisitorController;
 
 class LinkController extends Controller
 {
@@ -54,9 +55,14 @@ class LinkController extends Controller
                 'custom_alias.unique' => 'Alias khusus sudah digunakan. Silakan pilih yang lain.',
             ]);
 
+            $userId = auth()->check() ? auth()->id() : null;
+
             $result = self::storeshorten(
                 $link['target_url'],
                 $link['custom_alias'] ?? null,
+                true,
+                null,
+                $userId
             );
 
             if (!$result['success']) {
@@ -192,11 +198,17 @@ class LinkController extends Controller
 
     public function redirect(Request $request, $new_link)
     {
-        // TODO: redirect ke original url berdasarkan short link
-    }
+        try {
+            $link = Link::where('new_link', $new_link)
+                ->where('is_active', true)
+                ->firstOrFail();
 
-    public function makeVisitor(Request $request)
-    {
-        // TODO: implementasi logika asinkron untuk membuat visitor
+            // Log visitor info
+            VisitorController::logVisitor($request, $link->id_link);
+
+            return redirect()->away($link->true_link);
+        } catch (\Exception $e) {
+            return redirect()->route('home')->withErrors(['form' => "Link tidak ditemukan atau tidak aktif."]);
+        }
     }
 }
