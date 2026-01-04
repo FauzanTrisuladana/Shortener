@@ -55,12 +55,14 @@ class VisitorController extends Controller
         if (function_exists('geoip')) {
             try {
                 $geo = geoip($ip);
-                return [
-                    $geo->country ?? null,
-                    $geo->city ?? null
-                ];
+                $country = $geo->country ?? null;
+                $city = $geo->city ?? null;
+                if ($country || $city) {
+                    return [$country, $city];
+                }
+                // Jika hasil geoip null, lanjut ke fallback
             } catch (\Exception $e) {
-                return [null, null];
+                // lanjut ke fallback
             }
         }
 
@@ -75,8 +77,9 @@ class VisitorController extends Controller
                 ];
             }
         } catch (\Exception $e) {
-            return [null, null];
+            // abaikan
         }
+        return [null, null];
     }
 
     public static function getTotalVisitors($userLinkIds)
