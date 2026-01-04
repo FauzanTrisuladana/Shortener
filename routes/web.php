@@ -22,14 +22,14 @@ use App\Http\Controllers\AuthController;
  * - Logout: POST /logout
  */
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::post('/shorten', [HomeController::class, 'shorten'])->name('shorten');
+Route::post('/shorten', [LinkController::class, 'shorten'])->name('shorten');
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-/** 
+/**
  * Google OAuth Routes
  *
  * Route:
@@ -65,11 +65,9 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::prefix('links')->group(function () {
         Route::get('/', [LinkController::class, 'index'])->name('links');
 	    Route::get('/{id}/analytics', [LinkController::class, 'analytics'])->name('link.analytics');
-        Route::get('/create', [LinkController::class, 'create'])->name('links.create');
-        Route::post('/store', [LinkController::class, 'store'])->name('links.store');
-        Route::get('/{id}/edit', [LinkController::class, 'edit'])->name('links.edit');
+        Route::post('/store', [LinkController::class, 'shortenwaccount'])->name('links.store');
         Route::post('/{id}/update', [LinkController::class, 'update'])->name('links.update');
-        Route::post('/{id}/delete', [LinkController::class, 'destroy'])->name('links.destroy');
+        Route::delete('/{id}', [LinkController::class, 'destroy'])->name('links.destroy');
     });
 
     /**

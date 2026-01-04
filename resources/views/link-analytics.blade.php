@@ -297,27 +297,48 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editLinkForm">
-                    <input type="hidden" id="editLinkId">
+                <form id="editLinkForm" method="POST" action="{{ route('links.update', ['id' => $id]) }}">
+                    @csrf
+                    @method('POST')
                     <div class="mb-3">
                         <label for="editOriginalUrl" class="form-label">Original URL</label>
-                        <input type="url" class="form-control" id="editOriginalUrl" placeholder="https://example.com/very-long-url">
+                        <input
+                            type="url"
+                            class="form-control"
+                            id="editOriginalUrl"
+                            name="target_url"
+                            placeholder="https://example.com/very-long-url">
                     </div>
                     <div class="mb-3">
                         <label for="editLinkName" class="form-label">Link Name</label>
-                        <input type="text" class="form-control" id="editLinkName" placeholder="My Campaign">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="editLinkName"
+                            name="name"
+                            placeholder="My Campaign">
                     </div>
                     <div class="mb-3">
                         <label for="editCustomAlias" class="form-label">Custom Alias</label>
                         <div class="input-group">
                             <span class="input-group-text">{{ rtrim(config('app.url'), '/') . '/' }}</span>
-                            <input type="text" class="form-control" id="editCustomAlias" placeholder="my-link">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="editCustomAlias"
+                                name="custom_alias"
+                                placeholder="my-link">
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Status</label>
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="editLinkStatus" checked>
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="editLinkStatus"
+                                name="is_active"
+                                checked>
                             <label class="form-check-label" for="editLinkStatus">
                                 Active
                             </label>

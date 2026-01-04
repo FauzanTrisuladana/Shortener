@@ -17,23 +17,44 @@
 </div>
 
 <!-- Search and Filter -->
-<div class="row mb-4">
+<form method="GET" action="{{ route('links') }}" id="filterForm" class="row mb-4">
     <div class="col-md-8">
         <div class="input-group">
             <span class="input-group-text">
                 <i class="bi bi-search"></i>
             </span>
-            <input type="text" class="form-control border-start-0" placeholder="Search links...">
+            <input
+                type="text"
+                class="form-control border-start-0"
+                name="search"
+                id="searchInput"
+                placeholder="Search by name, alias, or URL..."
+                value="{{ request('search') }}">
+            @if(request('search'))
+                <a href="{{ route('links') }}" class="btn btn-outline-secondary" title="Clear search">
+                    <i class="bi bi-x"></i>
+                </a>
+            @endif
         </div>
     </div>
     <div class="col-md-4">
-        <select class="form-select">
-            <option selected>All Links</option>
-            <option value="1">Active</option>
-            <option value="2">Inactive</option>
+        <select class="form-select" name="status" id="statusFilter">
+            <option value="all" @if(!request('status') || request('status') === 'all') selected @endif>All Links</option>
+            <option value="active" @if(request('status') === 'active') selected @endif>Active</option>
+            <option value="inactive" @if(request('status') === 'inactive') selected @endif>Inactive</option>
         </select>
     </div>
-</div>
+</form>
+
+{{-- Success Alert --}}
+@if(session('success'))
+    <x-alert-success :message="session('success')" />
+@endif
+
+{{-- Error Alert --}}
+@if($errors->has('delete'))
+    <x-alert-error :message="$errors->first('delete')" />
+@endif
 
 <!-- Links List -->
 <div class="row">
@@ -54,156 +75,50 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse ($links as $link)
                             <tr>
                                 <td class="ps-4">
-                                    <a href="#" class="text-decoration-none fw-semibold">link.trisuladana.com/promo-special</a>
+                                    <a href="{{ url($link->new_link) }}" class="text-decoration-none fw-semibold" target="_blank">{{ url($link->new_link) }}</a>
                                 </td>
                                 <td>
-                                    <span class="fw-semibold">Promo Special Campaign</span>
+                                    <span class="fw-semibold">{{ $link->name }}</span>
                                 </td>
                                 <td>
-                                    <span class="text-muted small">https://example.com/very-long-url-here/promo...</span>
+                                    <span class="text-muted small" title="{{ $link->true_link }}">{{ Str::limit($link->true_link, 50) }}</span>
                                 </td>
-                                <td><strong>3,245</strong></td>
-                                <td><small class="text-muted">15 Des 2025</small></td>
-                                <td><span class="badge bg-success">Active</span></td>
+                                <td><strong>{{ $link->visitors->count() }}</strong></td>
+                                <td><small class="text-muted">{{ $link->created_at->format('d M Y') }}</small></td>
+                                <td>
+                                    @if($link->is_active)
+                                        <span class="badge bg-success">Active</span>
+                                    @else
+                                        <span class="badge bg-warning text-dark">Inactive</span>
+                                    @endif
+                                </td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-outline-secondary me-1" title="Edit" data-bs-toggle="modal" data-bs-target="#editLinkModal" onclick="editLink(1, 'promo-special', 'Promo Special Campaign', 'https://example.com/very-long-url-here/promo-special')">
+                                    <button class="btn btn-sm btn-outline-secondary m-1" title="Edit" data-bs-toggle="modal" data-bs-target="#editLinkModal{{ $link->id_link }}">
                                         <i class="bi bi-pencil"></i>
                                     </button>
-                                    <a href="{{ route('link.analytics', 1) }}" class="btn btn-sm btn-outline-primary me-1" title="Analytics">
+                                    <a href="{{ route('link.analytics', $link->id_link) }}" class="btn btn-sm btn-outline-primary m-1" title="Analytics">
                                         <i class="bi bi-bar-chart"></i>
                                     </a>
-                                    <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
+                                    <form action="{{ route('links.destroy', $link->id_link) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus link ini?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger m-1" title="Delete">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
+                            @empty
                             <tr>
-                                <td class="ps-4">
-                                    <a href="#" class="text-decoration-none fw-semibold">link.trisuladana.com/campaign-2024</a>
-                                </td>
-                                <td>
-                                    <span class="fw-semibold">Year End Campaign</span>
-                                </td>
-                                <td>
-                                    <span class="text-muted small">https://marketing.site/campaign-end-year-2024...</span>
-                                </td>
-                                <td><strong>2,891</strong></td>
-                                <td><small class="text-muted">12 Des 2025</small></td>
-                                <td><span class="badge bg-success">Active</span></td>
-                                <td class="text-center">
-                                    <button class="btn btn-sm btn-outline-secondary me-1" title="Edit" data-bs-toggle="modal" data-bs-target="#editLinkModal" onclick="editLink(2, 'campaign-2024', 'Year End Campaign', 'https://marketing.site/campaign-end-year-2024')">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <a href="{{ route('link.analytics', 2) }}" class="btn btn-sm btn-outline-primary me-1" title="Analytics">
-                                        <i class="bi bi-bar-chart"></i>
-                                    </a>
-                                    <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
+                                <td colspan="7" class="text-center py-5 text-muted">
+                                    <i class="bi bi-link-45deg fs-1 d-block mb-2"></i>
+                                    Belum ada link. Buat link pertama Anda!
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="ps-4">
-                                    <a href="#" class="text-decoration-none fw-semibold">link.trisuladana.com/webinar-tech</a>
-                                </td>
-                                <td>
-                                    <span class="fw-semibold">Tech Webinar 2024</span>
-                                </td>
-                                <td>
-                                    <span class="text-muted small">https://events.com/webinar-tech-summit-2024...</span>
-                                </td>
-                                <td><strong>2,456</strong></td>
-                                <td><small class="text-muted">10 Des 2025</small></td>
-                                <td><span class="badge bg-success">Active</span></td>
-                                <td class="text-center">
-                                    <button class="btn btn-sm btn-outline-secondary me-1" title="Edit" data-bs-toggle="modal" data-bs-target="#editLinkModal" onclick="editLink(3, 'webinar-tech', 'Tech Webinar 2024', 'https://events.com/webinar-tech-summit-2024')">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <a href="{{ route('link.analytics', 3) }}" class="btn btn-sm btn-outline-primary me-1" title="Analytics">
-                                        <i class="bi bi-bar-chart"></i>
-                                    </a>
-                                    <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="ps-4">
-                                    <a href="#" class="text-decoration-none fw-semibold">link.trisuladana.com/product-launch</a>
-                                </td>
-                                <td>
-                                    <span class="fw-semibold">Product Launch Dec</span>
-                                </td>
-                                <td>
-                                    <span class="text-muted small">https://shop.com/new-product-launch-december...</span>
-                                </td>
-                                <td><strong>1,987</strong></td>
-                                <td><small class="text-muted">8 Des 2025</small></td>
-                                <td><span class="badge bg-success">Active</span></td>
-                                <td class="text-center">
-                                    <button class="btn btn-sm btn-outline-secondary me-1" title="Edit" data-bs-toggle="modal" data-bs-target="#editLinkModal" onclick="editLink(4, 'product-launch', 'Product Launch Dec', 'https://shop.com/new-product-launch-december')">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <a href="{{ route('link.analytics', 4) }}" class="btn btn-sm btn-outline-primary me-1" title="Analytics">
-                                        <i class="bi bi-bar-chart"></i>
-                                    </a>
-                                    <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="ps-4">
-                                    <a href="#" class="text-decoration-none fw-semibold">link.trisuladana.com/portfolio</a>
-                                </td>
-                                <td>
-                                    <span class="fw-semibold">Portfolio Showcase</span>
-                                </td>
-                                <td>
-                                    <span class="text-muted small">https://portfolio.design/showcase-works-2024...</span>
-                                </td>
-                                <td><strong>1,268</strong></td>
-                                <td><small class="text-muted">5 Des 2025</small></td>
-                                <td><span class="badge bg-success">Active</span></td>
-                                <td class="text-center">
-                                    <button class="btn btn-sm btn-outline-secondary me-1" title="Edit" data-bs-toggle="modal" data-bs-target="#editLinkModal" onclick="editLink(5, 'portfolio', 'Portfolio Showcase', 'https://portfolio.design/showcase-works-2024')">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <a href="{{ route('link.analytics', 5) }}" class="btn btn-sm btn-outline-primary me-1" title="Analytics">
-                                        <i class="bi bi-bar-chart"></i>
-                                    </a>
-                                    <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="ps-4">
-                                    <a href="#" class="text-decoration-none fw-semibold">link.trisuladana.com/discount-week</a>
-                                </td>
-                                <td>
-                                    <span class="fw-semibold">Discount Week Special</span>
-                                </td>
-                                <td>
-                                    <span class="text-muted small">https://store.online/discount-week-special...</span>
-                                </td>
-                                <td><strong>892</strong></td>
-                                <td><small class="text-muted">2 Des 2025</small></td>
-                                <td><span class="badge bg-warning text-dark">Inactive</span></td>
-                                <td class="text-center">
-                                    <button class="btn btn-sm btn-outline-secondary me-1" title="Edit" data-bs-toggle="modal" data-bs-target="#editLinkModal" onclick="editLink(6, 'discount-week', 'Discount Week Special', 'https://store.online/discount-week-special')">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <a href="{{ route('link.analytics', 6) }}" class="btn btn-sm btn-outline-primary me-1" title="Analytics">
-                                        <i class="bi bi-bar-chart"></i>
-                                    </a>
-                                    <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -224,28 +139,69 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="createLinkForm" method="POST" action="{{ route('links.store') }}">
+                    @csrf
                     <div class="mb-3">
                         <label for="originalUrl" class="form-label">Original URL</label>
-                        <input type="url" class="form-control" id="originalUrl" placeholder="https://example.com/very-long-url">
+                        <input
+                            type="url"
+                            class="form-control"
+                            id="originalUrl"
+                            name="target_url"
+                            placeholder="https://example.com/very-long-url"
+                            value="{{ old('target_url') }}"
+                            required>
+                        <x-alert-input-error field="target_url" errorBag="new" />
                     </div>
                     <div class="mb-3">
                         <label for="linkName" class="form-label">Link Name</label>
-                        <input type="text" class="form-control" id="linkName" placeholder="My Campaign">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="linkName"
+                            name="name"
+                            placeholder="My Campaign"
+                            value="{{ old('name') }}"
+                            required>
+                        <x-alert-input-error field="name" errorBag="new" />
                     </div>
                     <div class="mb-3">
                         <label for="customAlias" class="form-label">Custom Alias (Optional)</label>
                         <div class="input-group">
                             <span class="input-group-text">{{ rtrim(config('app.url'), '/') . '/' }}</span>
-                            <input type="text" class="form-control" id="customAlias" placeholder="my-link">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="customAlias"
+                                name="custom_alias"
+                                placeholder="my-link"
+                                value="{{ old('custom_alias') }}"
+                                required>
                         </div>
+                        <x-alert-input-error field="custom_alias" errorBag="new" />
                         <small class="text-muted">Leave empty for random alias</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Status</label>
+                        <div class="form-check form-switch">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="createLinkStatus"
+                                name="is_active"
+                                value="1"
+                                @if(old('is_active')) checked @endif>
+                            <label class="form-check-label" for="createLinkStatus">
+                                Active
+                            </label>
+                        </div>
+                        <x-alert-input-error field="is_active" errorBag="new" />
                     </div>
                 </form>
             </div>
             <div class="modal-footer border-0">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger">
+                <button type="submit" form="createLinkForm" class="btn btn-danger">
                     <i class="bi bi-check-circle me-2"></i>
                     Create Link
                 </button>
@@ -255,48 +211,78 @@
 </div>
 
 <!-- Edit Link Modal -->
-<div class="modal fade" id="editLinkModal" tabindex="-1" aria-labelledby="editLinkModalLabel" aria-hidden="true">
+@foreach ($links as $link)
+<div class="modal fade" id="editLinkModal{{ $link->id_link }}" tabindex="-1" aria-labelledby="editLinkModalLabel{{ $link->id_link }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header border-0">
-                <h5 class="modal-title" id="editLinkModalLabel">
+                <h5 class="modal-title" id="editLinkModalLabel{{ $link->id_link }}">
                     <i class="bi bi-pencil me-2"></i>
                     Edit Link
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editLinkForm">
-                    <input type="hidden" id="editLinkId">
+                <form id="editLinkForm{{ $link->id_link }}" method="POST" action="{{ route('links.update', ['id' => $link->id_link]) }}">
+                    @csrf
+                    @method('POST')
                     <div class="mb-3">
-                        <label for="editOriginalUrl" class="form-label">Original URL</label>
-                        <input type="url" class="form-control" id="editOriginalUrl" placeholder="https://example.com/very-long-url">
+                        <label for="editOriginalUrl{{ $link->id_link }}" class="form-label">Original URL</label>
+                        <input
+                            type="url"
+                            class="form-control"
+                            id="editOriginalUrl{{ $link->id_link }}"
+                            name="target_url"
+                            value="{{ $link->true_link }}"
+                            placeholder="https://example.com/very-long-url">
+                        <x-alert-input-error field="target_url" errorBag="edit" />
                     </div>
                     <div class="mb-3">
-                        <label for="editLinkName" class="form-label">Link Name</label>
-                        <input type="text" class="form-control" id="editLinkName" placeholder="My Campaign">
+                        <label for="editLinkName{{ $link->id_link }}" class="form-label">Link Name</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="editLinkName{{ $link->id_link }}"
+                            name="name"
+                            value="{{ $link->name }}"
+                            placeholder="My Campaign">
+                        <x-alert-input-error field="name" errorBag="edit" />
                     </div>
                     <div class="mb-3">
-                        <label for="editCustomAlias" class="form-label">Custom Alias</label>
+                        <label for="editCustomAlias{{ $link->id_link }}" class="form-label">Custom Alias</label>
                         <div class="input-group">
                             <span class="input-group-text">{{ rtrim(config('app.url'), '/') . '/' }}</span>
-                            <input type="text" class="form-control" id="editCustomAlias" placeholder="my-link">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="editCustomAlias{{ $link->id_link }}"
+                                name="custom_alias"
+                                value="{{ $link->new_link }}"
+                                placeholder="my-link">
                         </div>
+                        <x-alert-input-error field="custom_alias" errorBag="edit" />
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Status</label>
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="editLinkStatus" checked>
-                            <label class="form-check-label" for="editLinkStatus">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="editLinkStatus{{ $link->id_link }}"
+                                name="is_active"
+                                value="1"
+                                @if($link->is_active) checked @endif>
+                            <label class="form-check-label" for="editLinkStatus{{ $link->id_link }}">
                                 Active
                             </label>
                         </div>
+                        <x-alert-input-error field="is_active" errorBag="edit" />
                     </div>
                 </form>
             </div>
             <div class="modal-footer border-0">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger">
+                <button type="submit" form="editLinkForm{{ $link->id_link }}" class="btn btn-danger">
                     <i class="bi bi-check-circle me-2"></i>
                     Save Changes
                 </button>
@@ -304,8 +290,50 @@
         </div>
     </div>
 </div>
+@endforeach
 
 @push('scripts')
 @vite('resources/js/links.js')
+<script>
+    // Auto-open modal if there are errors
+    document.addEventListener('DOMContentLoaded', function() {
+        @if($errors->hasBag('new'))
+            var createModal = new bootstrap.Modal(document.getElementById('createLinkModal'));
+            createModal.show();
+        @endif
+
+        @if($errors->hasBag('edit') && session('id'))
+            var editModalId = 'editLinkModal{{ session("id") }}';
+            var editModalElement = document.getElementById(editModalId);
+            if (editModalElement) {
+                var editModal = new bootstrap.Modal(editModalElement);
+                editModal.show();
+            }
+        @endif
+
+        // Real-time filter on status change
+        const statusFilter = document.getElementById('statusFilter');
+        const searchInput = document.getElementById('searchInput');
+        const filterForm = document.getElementById('filterForm');
+
+        // Submit form on filter change
+        if (statusFilter) {
+            statusFilter.addEventListener('change', function() {
+                filterForm.submit();
+            });
+        }
+
+        // Real-time search with debounce
+        let searchTimeout;
+        if (searchInput) {
+            searchInput.addEventListener('keyup', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    filterForm.submit();
+                }, 500);
+            });
+        }
+    });
+</script>
 @endpush
 @endsection
