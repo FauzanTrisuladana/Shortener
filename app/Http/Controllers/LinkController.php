@@ -55,7 +55,7 @@ class LinkController extends Controller
                 $link['custom_alias'] ?? null,
             );
 
-            if (!$result['success']) {
+            if ($result['status'] !== 'success') {
                 throw new \Exception('Gagal memperpendek URL.');
             }
 
