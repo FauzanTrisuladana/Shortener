@@ -26,7 +26,7 @@
     ]
   },
   "resources/css/dashboard.css": {
-    "file": "assets/dashboard-gkqhL24L.css",
+    "file": "assets/dashboard-CzTZRJTA.css",
     "src": "resources/css/dashboard.css",
     "isEntry": true,
     "name": "dashboard",
@@ -87,7 +87,7 @@
     "isEntry": true
   },
   "resources/js/link-analytics.js": {
-    "file": "assets/link-analytics-B4BzmOqu.js",
+    "file": "assets/link-analytics-dpNtAnxH.js",
     "name": "link-analytics",
     "src": "resources/js/link-analytics.js",
     "isEntry": true

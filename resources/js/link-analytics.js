@@ -3,60 +3,104 @@ document.addEventListener('DOMContentLoaded', function() {
     // Click Activity Chart
     const activityCtx = document.getElementById('clickActivityChart');
     if (activityCtx) {
-        const weeklyData = {
-            labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'],
-            datasets: [{
-                label: 'Clicks',
-                data: [145, 178, 156, 201, 189, 167, 134],
-                borderColor: '#667eea',
-                backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                tension: 0.4,
-                fill: true,
-                borderWidth: 2
-            }]
+        // Get data from backend
+        const sevenDaysData = {
+            labels: window.chartData.sevenDays.labels,
+            datasets: [
+                {
+                    label: 'Total Clicks',
+                    data: window.chartData.sevenDays.data,
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    borderWidth: 2
+                },
+                {
+                    label: 'Unique Visitors',
+                    data: window.chartData.sevenDays.uniqueData,
+                    borderColor: '#f093fb',
+                    backgroundColor: 'rgba(240, 147, 251, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    borderWidth: 2
+                }
+            ]
         };
 
-        const monthlyData = {
-            labels: Array.from({length: 30}, (_, i) => `${i + 1}`),
-            datasets: [{
-                label: 'Clicks',
-                data: [89, 112, 98, 145, 178, 156, 201, 189, 167, 134, 123, 145, 167, 189, 201, 178, 156, 134, 112, 98, 89, 101, 123, 145, 167, 189, 201, 178, 156, 134],
-                borderColor: '#667eea',
-                backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                tension: 0.4,
-                fill: true,
-                borderWidth: 2
-            }]
+        const thirtyDaysData = {
+            labels: window.chartData.thirtyDays.labels,
+            datasets: [
+                {
+                    label: 'Total Clicks',
+                    data: window.chartData.thirtyDays.data,
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    borderWidth: 2
+                },
+                {
+                    label: 'Unique Visitors',
+                    data: window.chartData.thirtyDays.uniqueData,
+                    borderColor: '#f093fb',
+                    backgroundColor: 'rgba(240, 147, 251, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    borderWidth: 2
+                }
+            ]
         };
 
-        const allData = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Oct', 'Nov', 'Des'],
-            datasets: [{
-                label: 'Clicks',
-                data: [1234, 1456, 1789, 2012, 2345, 2678, 2901, 3123, 2890, 2567, 2234, 3245],
-                borderColor: '#667eea',
-                backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                tension: 0.4,
-                fill: true,
-                borderWidth: 2
-            }]
+        const allTimeData = {
+            labels: window.chartData.allTime.labels,
+            datasets: [
+                {
+                    label: 'Total Clicks',
+                    data: window.chartData.allTime.data,
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    borderWidth: 2
+                },
+                {
+                    label: 'Unique Visitors',
+                    data: window.chartData.allTime.uniqueData,
+                    borderColor: '#f093fb',
+                    backgroundColor: 'rgba(240, 147, 251, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    borderWidth: 2
+                }
+            ]
         };
 
-        const activityChart = new Chart(activityCtx, {
+        const config = {
             type: 'line',
-            data: weeklyData,
+            data: sevenDaysData,
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: false
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: {
+                                size: 12
+                            }
+                        }
                     },
                     tooltip: {
                         mode: 'index',
                         intersect: false,
                         backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                        padding: 12
+                        padding: 12,
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        borderWidth: 1
                     }
                 },
                 scales: {
@@ -65,126 +109,247 @@ document.addEventListener('DOMContentLoaded', function() {
                         grid: {
                             color: 'rgba(0, 0, 0, 0.05)',
                             drawBorder: false
+                        },
+                        ticks: {
+                            color: '#6c757d',
+                            font: {
+                                size: 11
+                            },
+                            callback: function(value) {
+                                if (Number.isInteger(value)) {
+                                    return value;
+                                }
+                                return '';
+                            }
                         }
                     },
                     x: {
                         grid: {
                             display: false,
                             drawBorder: false
+                        },
+                        ticks: {
+                            color: '#6c757d',
+                            font: {
+                                size: 11
+                            }
                         }
                     }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
                 }
             }
-        });
+        };
+
+        const chart = new Chart(activityCtx, config);
 
         // Handle time range changes
         document.querySelectorAll('input[name="timeRange"]').forEach(radio => {
             radio.addEventListener('change', function() {
-                if (this.id === 'weekly') {
-                    activityChart.data = weeklyData;
-                } else if (this.id === 'monthly') {
-                    activityChart.data = monthlyData;
-                } else if (this.id === 'all') {
-                    activityChart.data = allData;
+                if (this.id === 'sevenDays') {
+                    chart.data = sevenDaysData;
+                } else if (this.id === 'thirtyDays') {
+                    chart.data = thirtyDaysData;
+                } else if (this.id === 'allTime') {
+                    chart.data = allTimeData;
                 }
-                activityChart.update();
+                chart.update();
             });
         });
+
+        // Dark mode chart colors
+        const updateChartColors = () => {
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)';
+            const tickColor = isDarkMode ? '#8a8a9a' : '#6c757d';
+
+            chart.options.scales.y.grid.color = gridColor;
+            chart.options.scales.y.ticks.color = tickColor;
+            chart.options.scales.x.ticks.color = tickColor;
+            chart.update();
+        };
+
+        // Update on dark mode toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', () => {
+                setTimeout(updateChartColors, 100);
+            });
+        }
+
+        // Initial update
+        updateChartColors();
     }
 
     // Country Chart
     const countryCtx = document.getElementById('countryChart');
     if (countryCtx) {
-        new Chart(countryCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Indonesia', 'USA', 'Malaysia', 'Singapore', 'Other'],
-                datasets: [{
-                    data: [1520, 891, 456, 287, 91],
-                    backgroundColor: ['#667eea', '#f093fb', '#4facfe', '#43e97b', '#cccccc'],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 15,
-                            font: {
-                                size: 12
+        if (!window.chartData.topcountries || window.chartData.topcountries.length === 0) {
+            const parent = countryCtx.parentElement;
+            parent.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 300px; color: #999; font-size: 14px;"><i class="bi bi-inbox" style="font-size: 32px; margin-right: 10px;"></i><span>Belum ada data tersedia</span></div>';
+            console.warn('Belum ada Data negara tersedia');
+        } else {
+            new Chart(countryCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: window.chartData.topcountries.map(item => item.country),
+                    datasets: [{
+                        data: window.chartData.topcountries.map(item => item.count),
+                        backgroundColor: [
+                            '#667eea',
+                            '#f093fb',
+                            '#4facfe',
+                            '#43e97b',
+                            '#fa709a'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': ' + context.parsed.toLocaleString() + ' visitors';
+                                }
                             }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
     }
 
     // City Chart
     const cityCtx = document.getElementById('cityChart');
     if (cityCtx) {
-        new Chart(cityCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Jakarta', 'NY', 'KL', 'SG', 'Sydney'],
-                datasets: [{
-                    data: [1245, 834, 429, 276, 187],
-                    backgroundColor: '#667eea',
-                    borderRadius: 6,
-                    barThickness: 30
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
+        if (!window.chartData.topcities || window.chartData.topcities.length === 0) {
+            const parent = cityCtx.parentElement;
+            parent.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 300px; color: #999; font-size: 14px;"><i class="bi bi-inbox" style="font-size: 32px; margin-right: 10px;"></i><span>Belum ada data tersedia</span></div>';
+            console.warn('Belum ada Data kota tersedia');
+        } else {
+            new Chart(cityCtx, {
+                type: 'bar',
+                data: {
+                    labels: window.chartData.topcities.map(item => item.city),
+                    datasets: [{
+                        label: 'Visitors',
+                        data: window.chartData.topcities.map(item => item.count),
+                        backgroundColor: '#667eea',
+                        borderRadius: 8,
+                        barThickness: 40
+                    }]
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: { color: 'rgba(0, 0, 0, 0.05)' }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12
+                        }
                     },
-                    x: {
-                        grid: { display: false }
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#6c757d',
+                                font: {
+                                    size: 11
+                                },
+                                callback: function(value) {
+                                    if (Number.isInteger(value)) {
+                                        return value;
+                                    }
+                                    return '';
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#6c757d',
+                                font: {
+                                    size: 11
+                                }
+                            }
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
     }
 
     // Device Chart
     const deviceCtx = document.getElementById('deviceChart');
     if (deviceCtx) {
-        new Chart(deviceCtx, {
-            type: 'pie',
-            data: {
-                labels: ['Mobile', 'Desktop', 'Tablet'],
-                datasets: [{
-                    data: [1892, 1123, 230],
-                    backgroundColor: ['#667eea', '#f093fb', '#4facfe'],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 15,
-                            font: {
-                                size: 12
+        if (!window.chartData.topdevices || window.chartData.topdevices.length === 0) {
+            const parent = deviceCtx.parentElement;
+            parent.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 300px; color: #999; font-size: 14px;"><i class="bi bi-inbox" style="font-size: 32px; margin-right: 10px;"></i><span>Belum ada data tersedia</span></div>';
+            console.warn('Belum ada Data perangkat tersedia');
+        } else {
+            new Chart(deviceCtx, {
+                type: 'pie',
+                data: {
+                    labels: window.chartData.topdevices.map(item => item.device),
+                    datasets: [{
+                        data: window.chartData.topdevices.map(item => item.count),
+                        backgroundColor: ['#667eea', '#f093fb', '#4facfe'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': ' + context.parsed.toLocaleString() + ' visitors';
+                                }
                             }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
     }
 });
 

@@ -17,15 +17,17 @@
                 <div class="row align-items-center">
                     <div class="col-md-8">
                         <h5 class="mb-2">
-                            <i class="bi bi-link-45deg text-primary me-2"></i>
-                            link.trisuladana.com/<span class="text-danger">promo-special</span>
+                            <a href="{{ url($link->new_link) }}" class="text-decoration-none">
+                                <i class="bi bi-link-45deg text-primary me-2"></i>
+                                {{ rtrim(config('app.url'), '/') . '/' }}<span class="text-danger">{{ $link->new_link }}</span>
+                            </a>
                         </h5>
                         <p class="text-muted mb-2">
-                            <strong>Name:</strong> Promo Special Campaign
+                            <strong>Name:</strong> {{ $link->name }}
                         </p>
                         <p class="text-muted small mb-0">
                             <i class="bi bi-box-arrow-up-right me-1"></i>
-                            Target: https://example.com/very-long-url-here/promo-special
+                            Target: {{ Str::limit($link->true_link, 50) }}
                         </p>
                     </div>
                     <div class="col-md-4 text-md-end mt-3 mt-md-0">
@@ -48,9 +50,9 @@
                     <h6 class="text-muted mb-0">Total Clicks</h6>
                     <i class="bi bi-mouse text-primary fs-4"></i>
                 </div>
-                <h2 class="mb-0">3,245</h2>
+                <h2 class="mb-0">{{ number_format($totalVisitors) }}</h2>
                 <small class="text-success">
-                    <i class="bi bi-arrow-up"></i> 12.5% minggu ini
+                    <i class="bi bi-arrow-up"></i> {{ number_format($percentageChange, 2) }}% minggu ini
                 </small>
             </div>
         </div>
@@ -63,9 +65,12 @@
                     <h6 class="text-muted mb-0">Unique Visitors</h6>
                     <i class="bi bi-person text-success fs-4"></i>
                 </div>
-                <h2 class="mb-0">2,891</h2>
+                <h2 class="mb-0">{{ number_format($uniqueVisitors) }}</h2>
                 <small class="text-muted">
-                    89.1% dari total
+                    @php
+                        $percentage = $totalVisitors > 0 ? ($uniqueVisitors / $totalVisitors * 100) : 0;
+                    @endphp
+                    {{ number_format($percentage, 1) }}% dari total
                 </small>
             </div>
         </div>
@@ -78,7 +83,7 @@
                     <h6 class="text-muted mb-0">Avg. Daily</h6>
                     <i class="bi bi-calendar-check text-warning fs-4"></i>
                 </div>
-                <h2 class="mb-0">108</h2>
+                <h2 class="mb-0">{{ number_format(intval($totalVisitors / 7)) }}</h2>
                 <small class="text-muted">
                     Per hari
                 </small>
@@ -90,12 +95,12 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h6 class="text-muted mb-0">Peak Hour</h6>
-                    <i class="bi bi-clock text-danger fs-4"></i>
+                    <h6 class="text-muted mb-0">Created</h6>
+                    <i class="bi bi-calendar2-check text-danger fs-4"></i>
                 </div>
-                <h2 class="mb-0">14:00</h2>
+                <h2 class="mb-0 small">{{ $link->created_at->format('d M Y H:i') }}</h2>
                 <small class="text-muted">
-                    WIB
+                    {{ $link->created_at->diffForHumans() }}
                 </small>
             </div>
         </div>
@@ -180,26 +185,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><i class="bi bi-browser-chrome text-warning me-2"></i>Chrome</td>
-                                <td class="text-end"><strong>1,892</strong></td>
-                                <td class="text-end">58%</td>
-                            </tr>
-                            <tr>
-                                <td><i class="bi bi-browser-safari text-primary me-2"></i>Safari</td>
-                                <td class="text-end"><strong>723</strong></td>
-                                <td class="text-end">22%</td>
-                            </tr>
-                            <tr>
-                                <td><i class="bi bi-browser-firefox text-danger me-2"></i>Firefox</td>
-                                <td class="text-end"><strong>423</strong></td>
-                                <td class="text-end">13%</td>
-                            </tr>
-                            <tr>
-                                <td><i class="bi bi-browser-edge text-info me-2"></i>Edge</td>
-                                <td class="text-end"><strong>207</strong></td>
-                                <td class="text-end">7%</td>
-                            </tr>
+                            @forelse($topBrowsers as $browser)
+                                <tr>
+                                    <td>
+                                        @if($browser->browser === 'Chrome')
+                                            <i class="bi bi-browser-chrome text-warning me-2"></i>
+                                        @elseif($browser->browser === 'Firefox')
+                                            <i class="bi bi-browser-firefox text-danger me-2"></i>
+                                        @elseif($browser->browser === 'Safari')
+                                            <i class="bi bi-browser-safari text-primary me-2"></i>
+                                        @elseif($browser->browser === 'Edge')
+                                            <i class="bi bi-browser-edge text-info me-2"></i>
+                                        @else
+                                            <i class="bi bi-globe text-secondary me-2"></i>
+                                        @endif
+                                        {{ $browser->browser }}
+                                    </td>
+                                    <td class="text-end"><strong>{{ number_format($browser->count) }}</strong></td>
+                                    <td class="text-end">{{ $browser->percentage }}%</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="3" class="text-center py-4 text-muted">
+                                        Belum ada data browser
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -213,7 +224,7 @@
     <div class="col-12">
         <div class="card border-0 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title mb-4">Recent Click Activity</h5>
+                <h5 class="card-title mb-4">20 Recent Click Activity</h5>
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
@@ -227,63 +238,49 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><small class="text-muted">2026-01-01 14:23:45</small></td>
-                                <td><i class="bi bi-flag me-1"></i>Indonesia</td>
-                                <td>Jakarta</td>
-                                <td><i class="bi bi-phone me-1"></i>Mobile</td>
-                                <td><i class="bi bi-browser-chrome text-warning me-1"></i>Chrome</td>
-                                <td><small class="text-muted">Direct</small></td>
-                            </tr>
-                            <tr>
-                                <td><small class="text-muted">2026-01-01 14:18:12</small></td>
-                                <td><i class="bi bi-flag me-1"></i>Indonesia</td>
-                                <td>Bandung</td>
-                                <td><i class="bi bi-laptop me-1"></i>Desktop</td>
-                                <td><i class="bi bi-browser-firefox text-danger me-1"></i>Firefox</td>
-                                <td><small class="text-muted">google.com</small></td>
-                            </tr>
-                            <tr>
-                                <td><small class="text-muted">2026-01-01 14:05:33</small></td>
-                                <td><i class="bi bi-flag me-1"></i>Malaysia</td>
-                                <td>Kuala Lumpur</td>
-                                <td><i class="bi bi-tablet me-1"></i>Tablet</td>
-                                <td><i class="bi bi-browser-safari text-primary me-1"></i>Safari</td>
-                                <td><small class="text-muted">facebook.com</small></td>
-                            </tr>
-                            <tr>
-                                <td><small class="text-muted">2026-01-01 13:52:18</small></td>
-                                <td><i class="bi bi-flag me-1"></i>Indonesia</td>
-                                <td>Surabaya</td>
-                                <td><i class="bi bi-phone me-1"></i>Mobile</td>
-                                <td><i class="bi bi-browser-chrome text-warning me-1"></i>Chrome</td>
-                                <td><small class="text-muted">twitter.com</small></td>
-                            </tr>
-                            <tr>
-                                <td><small class="text-muted">2026-01-01 13:41:05</small></td>
-                                <td><i class="bi bi-flag me-1"></i>Singapore</td>
-                                <td>Singapore</td>
-                                <td><i class="bi bi-laptop me-1"></i>Desktop</td>
-                                <td><i class="bi bi-browser-edge text-info me-1"></i>Edge</td>
-                                <td><small class="text-muted">linkedin.com</small></td>
-                            </tr>
+                            @forelse($recentVisitors as $visitor)
+                                <tr>
+                                    <td><small class="text-muted">{{ $visitor->timestamp->format('Y-m-d H:i:s') }}</small></td>
+                                    <td><i class="bi bi-flag me-1"></i>{{ $visitor->country ?? 'tidak dikenal' }}</td>
+                                    <td>{{ $visitor->city ?? 'tidak dikenal' }}</td>
+                                    <td>
+                                        @if($visitor->device === 'Mobile')
+                                            <i class="bi bi-phone me-1"></i>
+                                        @elseif($visitor->device === 'Tablet')
+                                            <i class="bi bi-tablet me-1"></i>
+                                        @else
+                                            <i class="bi bi-laptop me-1"></i>
+                                        @endif
+                                        {{ $visitor->device }}
+                                    </td>
+                                    <td>
+                                        @if($visitor->browser === 'Chrome')
+                                            <i class="bi bi-browser-chrome text-warning me-1"></i>
+                                        @elseif($visitor->browser === 'Firefox')
+                                            <i class="bi bi-browser-firefox text-danger me-1"></i>
+                                        @elseif($visitor->browser === 'Safari')
+                                            <i class="bi bi-browser-safari text-primary me-1"></i>
+                                        @elseif($visitor->browser === 'Edge')
+                                            <i class="bi bi-browser-edge text-info me-1"></i>
+                                        @endif
+                                        {{ $visitor->browser }}
+                                    </td>
+                                    <td><small class="text-muted">{{ $visitor->referrer ? Str::limit($visitor->referrer, 20) : 'Direct' }}</small></td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center py-4 text-muted">
+                                        Belum ada visitor
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
-                </div>
-                <div class="text-center mt-3">
-                    <button class="btn btn-outline-secondary btn-sm">
-                        <i class="bi bi-arrow-clockwise me-2"></i>Load More
-                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-@push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-@vite('resources/js/link-analytics.js')
-@endpush
 
 <!-- Edit Link Modal -->
 <div class="modal fade" id="editLinkModal" tabindex="-1" aria-labelledby="editLinkModalLabel" aria-hidden="true">
@@ -307,6 +304,7 @@
                             class="form-control"
                             id="editOriginalUrl"
                             name="target_url"
+                            value="{{ $link->true_link }}"
                             placeholder="https://example.com/very-long-url">
                     </div>
                     <div class="mb-3">
@@ -316,6 +314,7 @@
                             class="form-control"
                             id="editLinkName"
                             name="name"
+                            value="{{ $link->name }}"
                             placeholder="My Campaign">
                     </div>
                     <div class="mb-3">
@@ -327,6 +326,7 @@
                                 class="form-control"
                                 id="editCustomAlias"
                                 name="custom_alias"
+                                value="{{ $link->new_link }}"
                                 placeholder="my-link">
                         </div>
                     </div>
@@ -338,7 +338,7 @@
                                 type="checkbox"
                                 id="editLinkStatus"
                                 name="is_active"
-                                checked>
+                                {{ $link->is_active ? 'checked' : '' }}>
                             <label class="form-check-label" for="editLinkStatus">
                                 Active
                             </label>
@@ -356,5 +356,35 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+    window.chartData = {
+        sevenDays: {
+            labels: @json($chart7Labels),
+            data: @json($chart7Data),
+            uniqueLabels: @json($chart7UniqueLabels),
+            uniqueData: @json($chart7UniqueData)
+        },
+        thirtyDays: {
+            labels: @json($chart30Labels),
+            data: @json($chart30Data),
+            uniqueLabels: @json($chart30UniqueLabels),
+            uniqueData: @json($chart30UniqueData)
+        },
+        allTime: {
+            labels: @json($chartAllLabels),
+            data: @json($chartAllData),
+            uniqueLabels: @json($chartAllUniqueLabels),
+            uniqueData: @json($chartAllUniqueData)
+        },
+        topcountries: @json($topCountries),
+        topcities: @json($topCities),
+        topdevices: @json($topDevices)
+    };
+</script>
+@vite('resources/js/link-analytics.js')
+@endpush
 
 @endsection

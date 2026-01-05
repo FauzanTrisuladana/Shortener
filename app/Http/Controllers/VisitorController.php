@@ -141,6 +141,21 @@ class VisitorController extends Controller
             ->get();
     }
 
+    public static function getTopBrowsers($userLinkIds)
+    {
+        $total = Visitor::whereIn('id_link', $userLinkIds)->count();
+
+        return Visitor::whereIn('id_link', $userLinkIds)
+            ->select(DB::raw('COALESCE(browser, "Unknown") as browser'), DB::raw('COUNT(*) as count'))
+            ->groupBy('browser')
+            ->orderBy('count', 'desc')
+            ->get()
+            ->map(function($item) use ($total) {
+                $item->percentage = $total > 0 ? round(($item->count / $total) * 100) : 0;
+                return $item;
+            });
+    }
+
     public static function getTotalVisitors($userLinkIds)
     {
         return Visitor::whereIn('id_link', $userLinkIds)->count();

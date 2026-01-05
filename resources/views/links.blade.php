@@ -190,7 +190,7 @@
                                 id="createLinkStatus"
                                 name="is_active"
                                 value="1"
-                                @if(old('is_active')) checked @endif>
+                                {{ $errors->hasBag('new') ? old('is_active') ? 'checked' : '' : 'checked' }}>
                             <label class="form-check-label" for="createLinkStatus">
                                 Active
                             </label>
@@ -277,7 +277,7 @@
                                 id="editLinkStatus{{ $link->id_link }}"
                                 name="is_active"
                                 value="1"
-                                @if($link->is_active) checked @endif>
+                                {{ $link->is_active ? 'checked' : '' }}>
                             <label class="form-check-label" for="editLinkStatus{{ $link->id_link }}">
                                 Active
                             </label>

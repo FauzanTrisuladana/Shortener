@@ -12,7 +12,7 @@
 
 <!-- Statistics Cards -->
 <div class="row mb-4">
-    <div class="col-md-4 mb-4">
+    <div class="col-md-3 mb-3">
         <div class="card border-0 shadow-sm">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-3">
@@ -27,7 +27,25 @@
         </div>
     </div>
 
-    <div class="col-md-4 mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="text-muted mb-0">Unique Visitors</h6>
+                    <i class="bi bi-person text-success fs-4"></i>
+                </div>
+                <h2 class="mb-0">{{ number_format($uniqueVisitors) }}</h2>
+                <small class="text-muted">
+                    @php
+                        $percentage = $totalVisitors > 0 ? ($uniqueVisitors / $totalVisitors * 100) : 0;
+                    @endphp
+                    {{ number_format($percentage, 1) }}% dari total
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
         <div class="card border-0 shadow-sm">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-3">
@@ -42,7 +60,7 @@
         </div>
     </div>
 
-    <div class="col-md-4 mb-4">
+    <div class="col-md-3 mb-3">
         <div class="card border-0 shadow-sm">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-3">

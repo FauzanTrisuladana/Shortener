@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LinkAnaliticController;
 
 /**
  * Web Routes
@@ -64,10 +65,10 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
      */
     Route::prefix('links')->group(function () {
         Route::get('/', [LinkController::class, 'index'])->name('links');
-	    Route::get('/{id}/analytics', [LinkController::class, 'analytics'])->name('links.analytics');
+	    Route::get('/{id}/analytics', [LinkAnaliticController::class, 'analytics'])->name('links.analytics');
         Route::post('/store', [LinkController::class, 'shortenwaccount'])->name('links.store');
         Route::post('/{id}/update', [LinkController::class, 'update'])->name('links.update');
-        Route::delete('/{id}', [LinkController::class, 'destroy'])->name('links.destroy');
+        Route::post('/{id}/delete', [LinkController::class, 'destroy'])->name('links.destroy');
     });
 
     /**

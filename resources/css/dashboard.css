@@ -388,3 +388,39 @@ body.dark-mode .navbar-toggler .navbar-toggler-icon {
         transform: translateX(0) !important;
     }
 }
+
+.row > .col-md-3 > .card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.row > .col-md-3 > .card .card-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.row > .col-md-3 > .card .card-body > small {
+    margin-top: auto;
+}
+
+/* Make statistics card icons lighter on hover */
+.card .fs-4 {
+    transition: color 0.2s;
+}
+.card:hover .bi.text-primary {
+    color: #6ea8fe !important; /* lighter blue */
+}
+.card:hover .bi.text-success {
+    color: #6fdc8c !important; /* lighter green */
+}
+.card:hover .bi.text-warning {
+    color: #ffe484 !important; /* lighter yellow */
+}
+.card:hover .bi.text-danger {
+    color: #ffb3b3 !important; /* lighter red */
+}
+.card:hover .bi.text-info {
+    color: #8fdcff !important; /* lighter info */
+}

@@ -37,12 +37,6 @@ class LinkController extends Controller
         return view('links', compact('links', 'newopened'));
     }
 
-    public function analytics($id)
-    {
-        // TODO: tampilkan analytics untuk link tertentu
-        return view('link-analytics', compact('id'));
-    }
-
     public function shorten(Request $request)
     {
         try {

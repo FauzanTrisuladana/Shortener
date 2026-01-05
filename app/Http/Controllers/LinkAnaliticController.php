@@ -3,21 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Link;
+use App\Models\Visitor;
 
-class AnalyticsController extends Controller
+class LinkAnaliticController extends Controller
 {
-    public function index()
+    /**
+     * Display analytics for a specific link.
+     */
+    public function analytics($id)
     {
-        $userId = auth()->id();
-        $userLinkIds = LinkController::getUserLinkIds($userId);
-        $links = LinkController::getAllLinks($userId);
+        $link = Link::where('id_link', $id)
+            ->where('id_user', auth()->id())
+            ->firstOrFail();
+
+        $userLinkIds = collect([$id]); // Hanya untuk link ini
 
         // Get statistics
-        $totalActiveLinks = LinkController::getActiveLinksCount($userId);
         $totalVisitors = VisitorController::getTotalVisitors($userLinkIds);
         $uniqueVisitors = VisitorController::getUniqueVisitors($userLinkIds);
         $percentageChange = VisitorController::getPercentageChange($userLinkIds);
-        $clickRate = VisitorController::getClickRate($userLinkIds);
 
         // Get chart data
         [$chart7Labels, $chart7Data] = VisitorController::getChartData($userLinkIds, 7);
@@ -27,21 +32,24 @@ class AnalyticsController extends Controller
         [$chartAllLabels, $chartAllData] = VisitorController::getAllTimeChartData($userLinkIds, $chart30Labels, $chart30Data);
         [$chartAllUniqueLabels, $chartAllUniqueData] = VisitorController::getAllTimeUniqueChartData($userLinkIds, $chart30UniqueLabels, $chart30UniqueData);
 
-        // Get Geographic data
-        $top5sCountries = VisitorController::getTopCountries($userLinkIds, 5);
-        $top5sCities = VisitorController::getTopCities($userLinkIds, 5);
-        $devices = VisitorController::getTopDevices($userLinkIds);
+        // Get geographic data
+        $topCountries = VisitorController::getTopCountries($userLinkIds, 5);
+        $topCities = VisitorController::getTopCities($userLinkIds, 5);
+        $topDevices = VisitorController::getTopDevices($userLinkIds);
+        $topBrowsers = VisitorController::getTopBrowsers($userLinkIds);
 
-        return view('analytics', compact(
-            'links',
+        // Get recent visitors
+        $recentVisitors = Visitor::where('id_link', $id)
+            ->orderBy('timestamp', 'desc')
+            ->limit(20)
+            ->get();
+
+        return view('link-analytics', compact(
+            'link',
+            'id',
             'totalVisitors',
             'uniqueVisitors',
             'percentageChange',
-            'totalActiveLinks',
-            'clickRate',
-            'top5sCountries',
-            'top5sCities',
-            'devices',
             'chart7Labels',
             'chart7Data',
             'chart7UniqueLabels',
@@ -53,7 +61,12 @@ class AnalyticsController extends Controller
             'chartAllLabels',
             'chartAllData',
             'chartAllUniqueLabels',
-            'chartAllUniqueData'
+            'chartAllUniqueData',
+            'topCountries',
+            'topCities',
+            'topDevices',
+            'topBrowsers',
+            'recentVisitors'
         ));
     }
 }
