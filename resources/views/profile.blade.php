@@ -15,40 +15,24 @@
     <div class="col-md-8 mb-4">
         <div class="card border-0 shadow-sm">
             <div class="card-body p-4">
-                <h5 class="card-title mb-4">Personal Information</h5>
+                <h5 class="card-title mb-4">Informasi Pribadi</h5>
                 <form>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label for="firstName" class="form-label">First Name</label>
-                            <input type="text" class="form-control" id="firstName" value="Fauzan">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="lastName" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" id="lastName" value="Trisuladana">
-                        </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nama</label>
+                        <input type="text" class="form-control" id="name" value="Fauzan Trisuladana">
                     </div>
 
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email Address</label>
+                        <label for="email" class="form-label">Alamat Email</label>
                         <input type="email" class="form-control" id="email" value="fauzan@example.com">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="phone" class="form-label">Phone Number</label>
-                        <input type="tel" class="form-control" id="phone" placeholder="+62 xxx xxxx xxxx">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="bio" class="form-label">Bio</label>
-                        <textarea class="form-control" id="bio" rows="3" placeholder="Tell us about yourself..."></textarea>
                     </div>
 
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-danger">
                             <i class="bi bi-check-circle me-2"></i>
-                            Save Changes
+                            Simpan Perubahan
                         </button>
-                        <button type="reset" class="btn btn-light">Cancel</button>
+                        <button type="reset" class="btn btn-light">Batal</button>
                     </div>
                 </form>
             </div>
@@ -57,26 +41,26 @@
         <!-- Change Password Card -->
         <div class="card border-0 shadow-sm mt-4">
             <div class="card-body p-4">
-                <h5 class="card-title mb-4">Change Password</h5>
+                <h5 class="card-title mb-4">Ubah Kata Sandi</h5>
                 <form>
                     <div class="mb-3">
-                        <label for="currentPassword" class="form-label">Current Password</label>
+                        <label for="currentPassword" class="form-label">Kata Sandi Saat Ini</label>
                         <input type="password" class="form-control" id="currentPassword">
                     </div>
 
                     <div class="mb-3">
-                        <label for="newPassword" class="form-label">New Password</label>
+                        <label for="newPassword" class="form-label">Kata Sandi Baru</label>
                         <input type="password" class="form-control" id="newPassword">
                     </div>
 
                     <div class="mb-3">
-                        <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                        <label for="confirmPassword" class="form-label">Konfirmasi Kata Sandi Baru</label>
                         <input type="password" class="form-control" id="confirmPassword">
                     </div>
 
                     <button type="submit" class="btn btn-danger">
                         <i class="bi bi-shield-lock me-2"></i>
-                        Update Password
+                        Perbarui Kata Sandi
                     </button>
                 </form>
             </div>
@@ -92,10 +76,9 @@
                     FT
                 </div>
                 <h5 class="mb-1">Fauzan Trisuladana</h5>
-                <p class="text-muted mb-3">Free User</p>
                 <button class="btn btn-outline-danger btn-sm w-100">
                     <i class="bi bi-camera me-2"></i>
-                    Change Photo
+                    Ubah Foto
                 </button>
             </div>
         </div>
@@ -105,11 +88,11 @@
             <div class="card-body m-4">
                 <h6 class="card-title text-danger mb-3">
                     <i class="bi bi-exclamation-triangle me-2"></i>
-                    Danger Zone
+                    Zona Berbahaya
                 </h6>
-                <p class="small text-muted mb-3">Permanently delete your account and all of your data.</p>
+                <p class="small text-muted mb-3">Hapus akun Anda secara permanen beserta semua data Anda.</p>
                 <button class="btn btn-outline-danger btn-sm w-100">
-                    Delete Account
+                    Hapus Akun
                 </button>
             </div>
         </div>

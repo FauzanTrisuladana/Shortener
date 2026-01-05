@@ -6,9 +6,9 @@
 <div class="row mb-4">
     <div class="col-12">
         <a href="{{ route('links') }}" class="btn btn-light mb-3">
-            <i class="bi bi-arrow-left me-2"></i>Back to Links
+            <i class="bi bi-arrow-left me-2"></i>Kembali ke Links
         </a>
-        <h1 class="h2 mb-2">Link Analytics</h1>
+        <h1 class="h2 mb-2">Analitik Link</h1>
         <p class="text-muted mb-3">Analisis detail untuk link tertentu</p>
 
         <!-- Link Info Card -->
@@ -47,7 +47,7 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h6 class="text-muted mb-0">Total Clicks</h6>
+                    <h6 class="text-muted mb-0">Pengunjung</h6>
                     <i class="bi bi-mouse text-primary fs-4"></i>
                 </div>
                 <h2 class="mb-0">{{ number_format($totalVisitors) }}</h2>
@@ -62,7 +62,7 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h6 class="text-muted mb-0">Unique Visitors</h6>
+                    <h6 class="text-muted mb-0">Pengunjung Unik</h6>
                     <i class="bi bi-person text-success fs-4"></i>
                 </div>
                 <h2 class="mb-0">{{ number_format($uniqueVisitors) }}</h2>
@@ -80,7 +80,7 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h6 class="text-muted mb-0">Avg. Daily</h6>
+                    <h6 class="text-muted mb-0">Rata-rata Harian</h6>
                     <i class="bi bi-calendar-check text-warning fs-4"></i>
                 </div>
                 <h2 class="mb-0">{{ number_format(intval($totalVisitors / 7)) }}</h2>
@@ -95,12 +95,12 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h6 class="text-muted mb-0">Created</h6>
+                    <h6 class="text-muted mb-0">Dibuat</h6>
                     <i class="bi bi-calendar2-check text-danger fs-4"></i>
                 </div>
                 <h2 class="mb-0 small">{{ $link->created_at->format('d M Y H:i') }}</h2>
                 <small class="text-muted">
-                    {{ $link->created_at->diffForHumans() }}
+                    {{ $link->created_at->locale('id')->diffForHumans() }}
                 </small>
             </div>
         </div>
@@ -113,7 +113,7 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h5 class="mb-0">Click Activity</h5>
+                    <h5 class="mb-0">Aktivitas Klik</h5>
                     <div class="btn-group" role="group">
                         <input type="radio" class="btn-check" name="timeRange" id="weekly" autocomplete="off" checked>
                         <label class="btn btn-outline-secondary btn-sm" for="weekly">7 Hari</label>
@@ -138,7 +138,7 @@
     <div class="col-md-4 mb-4">
         <div class="card border-0 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title mb-4">Top 5 Countries</h5>
+                <h5 class="card-title mb-4">Top 5 Negara</h5>
                 <div class="chart-container" style="height: 250px; position: relative;">
                     <canvas id="countryChart"></canvas>
                 </div>
@@ -149,7 +149,7 @@
     <div class="col-md-4 mb-4">
         <div class="card border-0 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title mb-4">Top 5 Cities</h5>
+                <h5 class="card-title mb-4">Top 5 Kota</h5>
                 <div class="chart-container" style="height: 250px; position: relative;">
                     <canvas id="cityChart"></canvas>
                 </div>
@@ -160,7 +160,7 @@
     <div class="col-md-4 mb-4">
         <div class="card border-0 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title mb-4">Devices</h5>
+                <h5 class="card-title mb-4">Perangkat</h5>
                 <div class="chart-container" style="height: 250px; position: relative;">
                     <canvas id="deviceChart"></canvas>
                 </div>
@@ -174,13 +174,13 @@
     <div class="col-md-12 mb-4">
         <div class="card border-0 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title mb-4">Browsers</h5>
+                <h5 class="card-title mb-4">Browser</h5>
                 <div class="table-responsive">
                     <table class="table table-sm">
                         <thead>
                             <tr>
                                 <th>Browser</th>
-                                <th class="text-end">Clicks</th>
+                                <th class="text-end">Klik</th>
                                 <th class="text-end">%</th>
                             </tr>
                         </thead>
@@ -224,15 +224,15 @@
     <div class="col-12">
         <div class="card border-0 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title mb-4">20 Recent Click Activity</h5>
+                <h5 class="card-title mb-4">20 Aktivitas Klik Terbaru</h5>
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th>Timestamp</th>
-                                <th>Country</th>
-                                <th>City</th>
-                                <th>Device</th>
+                                <th>Negara</th>
+                                <th>Kota</th>
+                                <th>Perangkat</th>
                                 <th>Browser</th>
                                 <th>Referrer</th>
                             </tr>
@@ -308,7 +308,7 @@
                             placeholder="https://example.com/very-long-url">
                     </div>
                     <div class="mb-3">
-                        <label for="editLinkName" class="form-label">Link Name</label>
+                        <label for="editLinkName" class="form-label">Nama Link</label>
                         <input
                             type="text"
                             class="form-control"
@@ -318,7 +318,7 @@
                             placeholder="My Campaign">
                     </div>
                     <div class="mb-3">
-                        <label for="editCustomAlias" class="form-label">Custom Alias</label>
+                        <label for="editCustomAlias" class="form-label">Alias Kustom</label>
                         <div class="input-group">
                             <span class="input-group-text">{{ rtrim(config('app.url'), '/') . '/' }}</span>
                             <input
@@ -350,7 +350,7 @@
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-danger">
                     <i class="bi bi-check-circle me-2"></i>
-                    Save Changes
+                    Simpan Perubahan
                 </button>
             </div>
         </div>

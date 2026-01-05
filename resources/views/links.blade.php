@@ -5,13 +5,13 @@
 @section('content')
 <div class="row mb-4">
     <div class="col-md-8">
-        <h1 class="h2 mb-3">My Links</h1>
+        <h1 class="h2 mb-3">Link Saya</h1>
         <p class="text-muted">Kelola semua link shortener Anda</p>
     </div>
     <div class="col-md-4 text-md-end">
         <button class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#createLinkModal">
             <i class="bi bi-plus-circle me-2"></i>
-            Create New Link
+            Buat Link Baru
         </button>
     </div>
 </div>
@@ -39,9 +39,9 @@
     </div>
     <div class="col-md-4">
         <select class="form-select" name="status" id="statusFilter">
-            <option value="all" @if(!request('status') || request('status') === 'all') selected @endif>All Links</option>
-            <option value="active" @if(request('status') === 'active') selected @endif>Active</option>
-            <option value="inactive" @if(request('status') === 'inactive') selected @endif>Inactive</option>
+            <option value="all" @if(!request('status') || request('status') === 'all') selected @endif>Semua Link</option>
+            <option value="active" @if(request('status') === 'active') selected @endif>Aktif</option>
+            <option value="inactive" @if(request('status') === 'inactive') selected @endif>Tidak Aktif</option>
         </select>
     </div>
 </form>
@@ -66,10 +66,10 @@
                         <thead class="bg-light">
                             <tr>
                                 <th class="border-0 ps-4">Short Link</th>
-                                <th class="border-0">Name</th>
-                                <th class="border-0">Original URL</th>
-                                <th class="border-0">Clicks</th>
-                                <th class="border-0">Created</th>
+                                <th class="border-0">Nama</th>
+                                <th class="border-0">URL Asli</th>
+                                <th class="border-0">Klik</th>
+                                <th class="border-0">Dibuat</th>
                                 <th class="border-0">Status</th>
                                 <th class="border-0 text-center">Actions</th>
                             </tr>
@@ -90,9 +90,9 @@
                                 <td><small class="text-muted">{{ $link->created_at->format('d M Y') }}</small></td>
                                 <td>
                                     @if($link->is_active)
-                                        <span class="badge bg-success">Active</span>
+                                        <span class="badge bg-success">Aktif</span>
                                     @else
-                                        <span class="badge bg-warning text-dark">Inactive</span>
+                                        <span class="badge bg-warning text-dark">Tidak Aktif</span>
                                     @endif
                                 </td>
                                 <td class="text-center">
@@ -134,7 +134,7 @@
             <div class="modal-header border-0">
                 <h5 class="modal-title" id="createLinkModalLabel">
                     <i class="bi bi-link-45deg me-2"></i>
-                    Create New Short Link
+                    Buat Link Baru
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -154,7 +154,7 @@
                         <x-alert-input-error field="target_url" errorBag="new" />
                     </div>
                     <div class="mb-3">
-                        <label for="linkName" class="form-label">Link Name</label>
+                        <label for="linkName" class="form-label">Nama Link</label>
                         <input
                             type="text"
                             class="form-control"
@@ -166,7 +166,7 @@
                         <x-alert-input-error field="name" errorBag="new" />
                     </div>
                     <div class="mb-3">
-                        <label for="customAlias" class="form-label">Custom Alias (Optional)</label>
+                        <label for="customAlias" class="form-label">Alias Kustom (Opsional)</label>
                         <div class="input-group">
                             <span class="input-group-text">{{ rtrim(config('app.url'), '/') . '/' }}</span>
                             <input
@@ -179,7 +179,7 @@
                                 required>
                         </div>
                         <x-alert-input-error field="custom_alias" errorBag="new" />
-                        <small class="text-muted">Leave empty for random alias</small>
+                        <small class="text-muted">Kosongkan untuk alias acak</small>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Status</label>
@@ -192,7 +192,7 @@
                                 value="1"
                                 {{ $errors->hasBag('new') ? old('is_active') ? 'checked' : '' : 'checked' }}>
                             <label class="form-check-label" for="createLinkStatus">
-                                Active
+                                Aktif
                             </label>
                         </div>
                         <x-alert-input-error field="is_active" errorBag="new" />
@@ -200,10 +200,10 @@
                 </form>
             </div>
             <div class="modal-footer border-0">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
                 <button type="submit" form="createLinkForm" class="btn btn-danger">
                     <i class="bi bi-check-circle me-2"></i>
-                    Create Link
+                    Buat Link
                 </button>
             </div>
         </div>
@@ -240,7 +240,7 @@
                         @endif
                     </div>
                     <div class="mb-3">
-                        <label for="editLinkName{{ $link->id_link }}" class="form-label">Link Name</label>
+                        <label for="editLinkName{{ $link->id_link }}" class="form-label">Nama Link</label>
                         <input
                             type="text"
                             class="form-control"
@@ -253,7 +253,7 @@
                         @endif
                     </div>
                     <div class="mb-3">
-                        <label for="editCustomAlias{{ $link->id_link }}" class="form-label">Custom Alias</label>
+                        <label for="editCustomAlias{{ $link->id_link }}" class="form-label">Alias Kustom</label>
                         <div class="input-group">
                             <span class="input-group-text">{{ rtrim(config('app.url'), '/') . '/' }}</span>
                             <input
@@ -292,10 +292,10 @@
                 @endif
             </div>
             <div class="modal-footer border-0">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
                 <button type="submit" form="editLinkForm{{ $link->id_link }}" class="btn btn-danger">
                     <i class="bi bi-check-circle me-2"></i>
-                    Save Changes
+                    Simpan Perubahan
                 </button>
             </div>
         </div>

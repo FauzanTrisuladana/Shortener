@@ -19,7 +19,7 @@
                         <div>
                             <h5 class="card-title mb-2">
                                 <i class="bi bi-link-45deg me-2"></i>
-                                Short new Link
+                                Buat Link Baru
                             </h5>
                             <p class="card-text mb-0 opacity-75">Buat link pendek baru</p>
                         </div>
@@ -37,7 +37,7 @@
                     <div>
                         <h5 class="card-title mb-2">
                             <i class="bi bi-question-circle me-2"></i>
-                            Help & Support
+                            Bantuan & Dukungan
                         </h5>
                         <p class="card-text mb-0 opacity-75">Butuh bantuan?</p>
                     </div>
@@ -59,7 +59,7 @@
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
                     <div>
-                        <p class="text-muted mb-1">Visitors</p>
+                        <p class="text-muted mb-1">Pengunjung</p>
                         <h2 class="mb-0">{{ number_format($totalVisitors) }}</h2>
                     </div>
                     <div class="bg-danger bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
@@ -75,7 +75,7 @@
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
                     <div>
-                        <p class="text-muted mb-1">Unique Visitor</p>
+                        <p class="text-muted mb-1">Pengunjung Unik</p>
                         <h2 class="mb-0">{{ number_format($uniqueVisitors) }}</h2>
                     </div>
                     <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
@@ -93,7 +93,7 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h5 class="mb-0">Click Activity</h5>
+                    <h5 class="mb-0">Aktivitas Klik</h5>
                     <div class="btn-group" role="group">
                         <input type="radio" class="btn-check" name="timeRange" id="sevenDays" autocomplete="off" checked>
                         <label class="btn btn-outline-secondary btn-sm" for="sevenDays">7 Hari</label>

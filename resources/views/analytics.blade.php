@@ -5,7 +5,7 @@
 @section('content')
 <div class="row mb-4">
     <div class="col-12">
-        <h1 class="h2 mb-3">Analytics</h1>
+        <h1 class="h2 mb-3">Analitik</h1>
         <p class="text-muted">Monitor performa link shortener Anda</p>
     </div>
 </div>
@@ -31,7 +31,7 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h6 class="text-muted mb-0">Unique Visitors</h6>
+                    <h6 class="text-muted mb-0">Pengunjung Unik</h6>
                     <i class="bi bi-person text-success fs-4"></i>
                 </div>
                 <h2 class="mb-0">{{ number_format($uniqueVisitors) }}</h2>
@@ -64,7 +64,7 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h6 class="text-muted mb-0">Click Rate</h6>
+                    <h6 class="text-muted mb-0">Tingkat Klik</h6>
                     <i class="bi bi-graph-up text-warning fs-4"></i>
                 </div>
                 <h2 class="mb-0">{{ $clickRate }} X</h2>
@@ -82,7 +82,7 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h5 class="mb-0">Click Activity</h5>
+                    <h5 class="mb-0">Aktivitas Klik</h5>
                     <div class="btn-group" role="group">
                         <input type="radio" class="btn-check" name="timeRange" id="sevenDays" autocomplete="off" checked>
                         <label class="btn btn-outline-secondary btn-sm" for="sevenDays">7 Hari</label>
@@ -129,7 +129,7 @@
     <div class="col-md-4 mb-4">
         <div class="card border-0 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title mb-4">Devices</h5>
+                <h5 class="card-title mb-4">Perangkat</h5>
                 <div class="chart-container" style="height: 300px; position: relative;">
                     <canvas id="deviceChart"></canvas>
                 </div>
@@ -143,7 +143,7 @@
     <div class="col-12">
         <div class="card border-0 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title mb-4">Top Performing Links</h5>
+                <h5 class="card-title mb-4">Link Teratas</h5>
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
@@ -171,9 +171,9 @@
                                     <td>{{ $link->created_at->format('d M Y') }}</td>
                                     <td>
                                         @if($link->is_active)
-                                            <span class="badge bg-success">Active</span>
+                                            <span class="badge bg-success">Aktif</span>
                                         @else
-                                            <span class="badge bg-secondary">Inactive</span>
+                                            <span class="badge bg-secondary">Tidak Aktif</span>
                                         @endif
                                     </td>
                                 </tr>
