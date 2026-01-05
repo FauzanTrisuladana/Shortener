@@ -26,6 +26,18 @@ class SocialiteController extends Controller
         try {
             $googleUser = Socialite::driver('google')->stateless()->user();
 
+            if (auth()->check()) {
+                // Jika user sudah login, kaitkan akun Google
+                $user = auth()->user();
+                $user->update([
+                    'email' => $googleUser->getEmail(),
+                    'provider' => 'google',
+                    'id_provider' => $googleUser->getId(),
+                ]);
+                Auth::login($user, true);
+                return redirect()->intended('dashboard');
+            }
+
             $user = User::firstOrCreate(
                 ['email' => $googleUser->getEmail()],
                 [
@@ -37,8 +49,8 @@ class SocialiteController extends Controller
             );
             // Update data setiap login
             $user->update([
-                'name' => $googleUser->getName() ?? $googleUser->getNickname(),
-                'profile_image' => $googleUser->getAvatar(),
+                'email' => $googleUser->getEmail(),
+                'provider' => 'google',
                 'id_provider' => $googleUser->getId(),
             ]);
 

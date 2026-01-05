@@ -102,13 +102,9 @@
                                     <a href="{{ route('links.analytics', $link->id_link) }}" class="btn btn-sm btn-outline-primary m-1" title="Analytics">
                                         <i class="bi bi-bar-chart"></i>
                                     </a>
-                                    <form action="{{ route('links.destroy', $link->id_link) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus link ini?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger m-1" title="Delete">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </form>
+                                    <button type="button" class="btn btn-sm btn-outline-danger m-1" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteLinkModal" data-link-id="{{ $link->id_link }}">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
                                 </td>
                             </tr>
                             @empty
@@ -303,6 +299,20 @@
 </div>
 @endforeach
 
+<x-delete-account-modal
+    :modalId="'deleteLinkModal'"
+    :title="'Hapus Link Secara Permanen'"
+    :message="'Tindakan ini tidak dapat dibatalkan. Link dan semua data analitik akan dihapus secara permanen.'"
+    :formId="'deleteLinkForm'"
+    :formAction="'#'"
+    :buttonId="'deleteLinkBtn'"
+    :buttonText="'Hapus Link Selamanya'"
+    :checkboxId="'confirmDeleteLink'"
+    :confirmText="'Saya mengerti dan ingin menghapus link ini secara permanen'"
+    :requireConfirm="true"
+    :method="'DELETE'"
+/>
+
 @push('scripts')
 @vite('resources/js/links.js')
 <script>
@@ -342,6 +352,29 @@
                 searchTimeout = setTimeout(() => {
                     filterForm.submit();
                 }, 500);
+            });
+        }
+
+        // Handle delete link modal
+        const deleteLinkModal = document.getElementById('deleteLinkModal');
+        const deleteLinkForm = document.getElementById('deleteLinkForm');
+        const deleteButtons = document.querySelectorAll('[data-bs-target="#deleteLinkModal"]');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const linkId = this.dataset.linkId;
+                const formAction = "{{ route('links.destroy', ':ID') }}".replace(':ID', linkId);
+                deleteLinkForm.action = formAction;
+            });
+        });
+
+        // Reset delete link modal when closed
+        if (deleteLinkModal) {
+            deleteLinkModal.addEventListener('hidden.bs.modal', function() {
+                const checkbox = document.getElementById('confirmDeleteLink');
+                const btn = document.getElementById('deleteLinkBtn');
+                if (checkbox) checkbox.checked = false;
+                if (btn) btn.disabled = true;
             });
         }
     });

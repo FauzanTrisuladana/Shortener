@@ -68,7 +68,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
 	    Route::get('/{id}/analytics', [LinkAnaliticController::class, 'analytics'])->name('links.analytics');
         Route::post('/store', [LinkController::class, 'shortenwaccount'])->name('links.store');
         Route::post('/{id}/update', [LinkController::class, 'update'])->name('links.update');
-        Route::post('/{id}/delete', [LinkController::class, 'destroy'])->name('links.destroy');
+        Route::delete('/{id}/delete', [LinkController::class, 'destroy'])->name('links.destroy');
     });
 
     /**
@@ -76,8 +76,16 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
      *
      * Route:
      * - View Profile: GET /dashboard/profile
+     * - Update Profile: POST /dashboard/profile/update
+     * - Update Password: POST /dashboard/profile/update-password
+     * - Upload Photo: POST /dashboard/profile/upload-photo
+     * - Delete Account: DELETE /dashboard/profile/delete
      */
 	Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::post('/profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
+    Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
+    Route::post('/profile/upload-photo', [ProfileController::class, 'uploadPhoto'])->name('profile.upload-photo');
+    Route::post('/profile/delete', [ProfileController::class, 'deleteAccount'])->name('profile.delete');
 });
 
 // Redirect short links
