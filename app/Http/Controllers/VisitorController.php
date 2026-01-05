@@ -115,10 +115,29 @@ class VisitorController extends Controller
     public static function getTopCountries($userLinkIds, $limit = 5)
     {
         return Visitor::whereIn('id_link', $userLinkIds)
-            ->select('country', DB::raw('COUNT(*) as count'))
+            ->select(DB::raw('COALESCE(country, "Tidak Dikenal") as country'), DB::raw('COUNT(*) as count'))
             ->groupBy('country')
             ->orderBy('count', 'desc')
             ->limit($limit)
+            ->get();
+    }
+
+    public static function getTopCities($userLinkIds, $limit = 5)
+    {
+        return Visitor::whereIn('id_link', $userLinkIds)
+            ->select(DB::raw('COALESCE(city, "Tidak Dikenal") as city'), DB::raw('COUNT(*) as count'))
+            ->groupBy('city')
+            ->orderBy('count', 'desc')
+            ->limit($limit)
+            ->get();
+    }
+
+    public static function getTopDevices($userLinkIds)
+    {
+        return Visitor::whereIn('id_link', $userLinkIds)
+            ->select(DB::raw('COALESCE(device, "Tidak Dikenal") as device'), DB::raw('COUNT(*) as count'))
+            ->groupBy('device')
+            ->orderBy('count', 'desc')
             ->get();
     }
 

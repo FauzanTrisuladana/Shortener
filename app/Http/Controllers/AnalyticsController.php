@@ -16,6 +16,8 @@ class AnalyticsController extends Controller
         $percentageChange = VisitorController::getPercentageChange($userLinkIds);
         $clickRate = VisitorController::getClickRate($userLinkIds);
         $top5sCountries = VisitorController::getTopCountries($userLinkIds, 5);
+        $top5sCities = VisitorController::getTopCities($userLinkIds, 5);
+        $devices = VisitorController::getTopDevices($userLinkIds);
 
         [$chart7Labels, $chart7Data] = VisitorController::getChartData($userLinkIds, 7);
         [$chart7UniqueLabels, $chart7UniqueData] = VisitorController::getUniqueVisitorsData($userLinkIds, 7);
@@ -31,6 +33,8 @@ class AnalyticsController extends Controller
             'totalActiveLinks',
             'clickRate',
             'top5sCountries',
+            'top5sCities',
+            'devices',
             'chart7Labels',
             'chart7Data',
             'chart7UniqueLabels',

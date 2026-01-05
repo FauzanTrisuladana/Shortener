@@ -194,7 +194,9 @@
             data: @json($chartAllData),
             uniqueData: @json($chartAllUniqueData)
         },
-        topcountries: @json($top5sCountries)
+        topcountries: @json($top5sCountries),
+        topcities: @json($top5sCities),
+        topdevices: @json($devices)
     };
 </script>
 @vite(['resources/js/dashboard.js', 'resources/js/analytics.js'])
