@@ -171,4 +171,14 @@
 />
 
 <x-upload-photo-modal />
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto-open upload photo modal if there are errors
+        @if($errors->has('profile_image'))
+            var uploadPhotoModal = new bootstrap.Modal(document.getElementById('uploadPhotoModal'));
+            uploadPhotoModal.show();
+        @endif
+    });
+</script>
 @endsection
