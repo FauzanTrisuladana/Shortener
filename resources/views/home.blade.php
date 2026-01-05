@@ -57,7 +57,7 @@
                         </span>
                         <input
                             type="text"
-                            class="form-control form-control-dark"
+                            class="form-control form-control-dark @error('custom_alias') is-invalid @enderror"
                             id="custom_alias"
                             name="custom_alias"
                             placeholder="url-custom"
