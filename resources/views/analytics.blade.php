@@ -19,9 +19,9 @@
                     <h6 class="text-muted mb-0">Total Clicks</h6>
                     <i class="bi bi-mouse text-primary fs-4"></i>
                 </div>
-                <h2 class="mb-0">12,847</h2>
+                <h2 class="mb-0">{{ $totalVisitors }}</h2>
                 <small class="text-success">
-                    <i class="bi bi-arrow-up"></i> 18.2% dari minggu lalu
+                    <i class="bi bi-arrow-up"></i> {{ $percentageChange }}% dari minggu lalu
                 </small>
             </div>
         </div>
@@ -34,7 +34,7 @@
                     <h6 class="text-muted mb-0">Total Links</h6>
                     <i class="bi bi-link-45deg text-success fs-4"></i>
                 </div>
-                <h2 class="mb-0">24</h2>
+                <h2 class="mb-0">{{ $totalActiveLinks }}</h2>
                 <small class="text-muted">
                     Link aktif
                 </small>
@@ -49,9 +49,9 @@
                     <h6 class="text-muted mb-0">Click Rate</h6>
                     <i class="bi bi-graph-up text-warning fs-4"></i>
                 </div>
-                <h2 class="mb-0">67.4%</h2>
+                <h2 class="mb-0">{{ $clickRate }} X</h2>
                 <small class="text-muted">
-                    Rata-rata
+                    Per link rata-rata
                 </small>
             </div>
         </div>
@@ -137,21 +137,36 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-link-45deg text-primary me-2"></i>
-                                        <div>
-                                            <a href="#" class="text-decoration-none">link.trisuladana.com/promo-special</a>
-                                            <br>
-                                            <small class="text-muted">https://example.com/very-long-url...</small>
+                            @forelse ($links as $link)
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-link-45deg text-primary me-2"></i>
+                                            <div>
+                                                <a href="{{ url($link->new_link) }}" class="text-decoration-none">{{ url($link->new_link) }}</a>
+                                                <br>
+                                                <small class="text-muted">{{ Str::limit($link->true_link, 50) }}</small>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </td>
+                                    <td><strong>{{ $link->visitors->count() }}</strong></td>
+                                    <td>{{ $link->created_at->format('d M Y') }}</td>
+                                    <td>
+                                        @if($link->is_active)
+                                            <span class="badge bg-success">Active</span>
+                                        @else
+                                            <span class="badge bg-secondary">Inactive</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                <td colspan="4" class="text-center py-5 text-muted">
+                                    <i class="bi bi-link-45deg fs-1 d-block mb-2"></i>
+                                    Belum ada link. Buat link pertama Anda!
                                 </td>
-                                <td><strong>3,245</strong></td>
-                                <td>15 Des 2025</td>
-                                <td><span class="badge bg-success">Active</span></td>
                             </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -178,7 +193,8 @@
             labels: @json($chartAllLabels),
             data: @json($chartAllData),
             uniqueData: @json($chartAllUniqueData)
-        }
+        },
+        topcountries: @json($top5sCountries)
     };
 </script>
 @vite(['resources/js/dashboard.js', 'resources/js/analytics.js'])

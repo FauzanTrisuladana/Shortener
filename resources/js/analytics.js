@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
         new Chart(countryCtx, {
             type: 'doughnut',
             data: {
-                labels: ['Indonesia', 'United States', 'Malaysia', 'Singapore', 'Australia'],
+                labels: topcountries.map(item => item.country),
                 datasets: [{
-                    data: [4520, 2891, 1456, 987, 623],
+                    data: topcountries.map(item => item.count),
                     backgroundColor: [
                         '#667eea',
                         '#f093fb',

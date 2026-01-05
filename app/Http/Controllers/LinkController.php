@@ -202,6 +202,11 @@ class LinkController extends Controller
         return Link::where('id_user', $userId)->get();
     }
 
+    public static function getActiveLinksCount($userId)
+    {
+        return Link::where('id_user', $userId)->where('is_active', true)->count();
+    }
+
     public function redirect(Request $request, $new_link)
     {
         try {

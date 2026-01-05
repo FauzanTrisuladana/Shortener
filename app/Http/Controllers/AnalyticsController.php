@@ -11,6 +11,11 @@ class AnalyticsController extends Controller
         $userId = auth()->id();
         $userLinkIds = LinkController::getUserLinkIds($userId);
         $links = LinkController::getAllLinks($userId);
+        $totalActiveLinks = LinkController::getActiveLinksCount($userId);
+        $totalVisitors = VisitorController::getTotalVisitors($userLinkIds);
+        $percentageChange = VisitorController::getPercentageChange($userLinkIds);
+        $clickRate = VisitorController::getClickRate($userLinkIds);
+        $top5sCountries = VisitorController::getTopCountries($userLinkIds, 5);
 
         [$chart7Labels, $chart7Data] = VisitorController::getChartData($userLinkIds, 7);
         [$chart7UniqueLabels, $chart7UniqueData] = VisitorController::getUniqueVisitorsData($userLinkIds, 7);
@@ -21,6 +26,11 @@ class AnalyticsController extends Controller
 
         return view('analytics', compact(
             'links',
+            'totalVisitors',
+            'percentageChange',
+            'totalActiveLinks',
+            'clickRate',
+            'top5sCountries',
             'chart7Labels',
             'chart7Data',
             'chart7UniqueLabels',

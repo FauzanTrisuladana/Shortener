@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Visitor;
+use Illuminate\Support\Facades\DB;
 
 class VisitorController extends Controller
 {
@@ -35,17 +36,17 @@ class VisitorController extends Controller
 
     private static function parseBrowser($userAgent)
     {
-        if (preg_match('/Chrome/', $userAgent)) return 'Chrome';
-        if (preg_match('/Firefox/', $userAgent)) return 'Firefox';
-        if (preg_match('/Safari/', $userAgent)) return 'Safari';
         if (preg_match('/Edge/', $userAgent)) return 'Edge';
+        if (preg_match('/Firefox/', $userAgent)) return 'Firefox';
+        if (preg_match('/Chrome/', $userAgent)) return 'Chrome';
+        if (preg_match('/Safari/', $userAgent)) return 'Safari';
         return 'Unknown';
     }
 
     private static function parseDevice($userAgent)
     {
-        if (preg_match('/Mobile|Android|iPhone|iPod/', $userAgent)) return 'Mobile';
         if (preg_match('/Tablet|iPad/', $userAgent)) return 'Tablet';
+        if (preg_match('/Mobile|Android|iPhone|iPod/', $userAgent)) return 'Mobile';
         return 'Desktop';
     }
 
@@ -82,6 +83,45 @@ class VisitorController extends Controller
         return [null, null];
     }
 
+    public static function getPercentageChange($userLinkIds)
+    {
+        $currentPeriodCount = Visitor::whereIn('id_link', $userLinkIds)
+            ->where('timestamp', '>=', now()->subDays(7))
+            ->count();
+
+        $previousPeriodCount = Visitor::whereIn('id_link', $userLinkIds)
+            ->whereBetween('timestamp', [now()->subDays(14), now()->subDays(7)])
+            ->count();
+
+        if ($previousPeriodCount == 0) {
+            return $currentPeriodCount > 0 ? 100 : 0;
+        }
+
+        return (($currentPeriodCount - $previousPeriodCount) / $previousPeriodCount) * 100;
+    }
+
+    public static function getClickRate($userLinkIds)
+    {
+        $totalClicks = Visitor::whereIn('id_link', $userLinkIds)->count();
+        $totalLinks = count($userLinkIds);
+
+        if ($totalLinks == 0) {
+            return 0;
+        }
+
+        return number_format($totalClicks / $totalLinks, 2);
+    }
+
+    public static function getTopCountries($userLinkIds, $limit = 5)
+    {
+        return Visitor::whereIn('id_link', $userLinkIds)
+            ->select('country', DB::raw('COUNT(*) as count'))
+            ->groupBy('country')
+            ->orderBy('count', 'desc')
+            ->limit($limit)
+            ->get();
+    }
+
     public static function getTotalVisitors($userLinkIds)
     {
         return Visitor::whereIn('id_link', $userLinkIds)->count();
@@ -98,7 +138,7 @@ class VisitorController extends Controller
     {
         $clickActivity = Visitor::whereIn('id_link', $userLinkIds)
             ->where('timestamp', '>=', now()->subDays($days))
-            ->select(\Illuminate\Support\Facades\DB::raw('DATE(timestamp) as date'), \Illuminate\Support\Facades\DB::raw('COUNT(*) as clicks'))
+            ->select(DB::raw('DATE(timestamp) as date'), DB::raw('COUNT(*) as clicks'))
             ->groupBy('date')
             ->orderBy('date', 'asc')
             ->get();
@@ -123,7 +163,7 @@ class VisitorController extends Controller
         if ($firstVisitor && $firstVisitor->timestamp->diffInDays(now()) > 60) {
             // Group by month
             $clickActivityAll = Visitor::whereIn('id_link', $userLinkIds)
-                ->select(\Illuminate\Support\Facades\DB::raw('DATE_FORMAT(timestamp, "%Y-%m") as month'), \Illuminate\Support\Facades\DB::raw('COUNT(*) as clicks'))
+                ->select(DB::raw('DATE_FORMAT(timestamp, "%Y-%m") as month'), DB::raw('COUNT(*) as clicks'))
                 ->groupBy('month')
                 ->orderBy('month', 'asc')
                 ->get();
@@ -144,7 +184,7 @@ class VisitorController extends Controller
     {
         $uniqueActivity = Visitor::whereIn('id_link', $userLinkIds)
             ->where('timestamp', '>=', now()->subDays($days))
-            ->select(\Illuminate\Support\Facades\DB::raw('DATE(timestamp) as date'), \Illuminate\Support\Facades\DB::raw('COUNT(DISTINCT ip_address) as unique_count'))
+            ->select(DB::raw('DATE(timestamp) as date'), DB::raw('COUNT(DISTINCT ip_address) as unique_count'))
             ->groupBy('date')
             ->orderBy('date', 'asc')
             ->get();
@@ -169,7 +209,7 @@ class VisitorController extends Controller
         if ($firstVisitor && $firstVisitor->timestamp->diffInDays(now()) > 60) {
             // Group by month
             $uniqueVisitorsAll = Visitor::whereIn('id_link', $userLinkIds)
-                ->select(\Illuminate\Support\Facades\DB::raw('DATE_FORMAT(timestamp, "%Y-%m") as month'), \Illuminate\Support\Facades\DB::raw('COUNT(DISTINCT ip_address) as unique_count'))
+                ->select(DB::raw('DATE_FORMAT(timestamp, "%Y-%m") as month'), DB::raw('COUNT(DISTINCT ip_address) as unique_count'))
                 ->groupBy('month')
                 ->orderBy('month', 'asc')
                 ->get();
