@@ -118,7 +118,10 @@ document.addEventListener('DOMContentLoaded', function() {
                             size: 11
                         },
                         callback: function(value) {
-                            return Math.round(value);
+                            if (Number.isInteger(value)) {
+                                return value;
+                            }
+                            return '';
                         }
                     }
                 },
