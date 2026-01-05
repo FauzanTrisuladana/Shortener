@@ -116,6 +116,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         color: '#6c757d',
                         font: {
                             size: 11
+                        },
+                        callback: function(value) {
+                            return Math.round(value);
                         }
                     }
                 },
