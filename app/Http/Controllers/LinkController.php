@@ -100,6 +100,10 @@ class LinkController extends Controller
                 throw new \Exception('Gagal memperpendek URL.');
             }
 
+            if (back()->getTargetUrl() === route('links', ['newopened' => '1'])) {
+                return redirect()->route('links')->with('success', 'URL berhasil diperpendek!')->with('short_url', $result['short_url']);
+            }
+
             return back()->with('success', 'URL berhasil diperpendek!')->with('short_url', $result['short_url']);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return back()->withErrors($e->errors(), 'new')->withInput();

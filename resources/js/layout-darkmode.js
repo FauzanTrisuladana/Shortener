@@ -42,4 +42,12 @@ document.addEventListener('DOMContentLoaded', function() {
             sidebarMenu.classList.remove('show');
         });
     }
+
+    if (sidebarMenu) {
+        document.addEventListener('click', function(event) {
+            if (!sidebarMenu.contains(event.target) && !event.target.closest('#sidebarToggleBtn')) {
+                sidebarMenu.classList.remove('show');
+            }
+        });
+    }
 });
