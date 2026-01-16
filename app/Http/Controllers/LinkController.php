@@ -41,11 +41,11 @@ class LinkController extends Controller
     {
         try {
             $link = $request->validate([
-                'target_url' => 'required|url',
+                'target_url' => 'required|string|max:2048',
                 'custom_alias' => 'nullable|alpha_dash|unique:links,new_link',
             ], [
                 'target_url.required' => 'URL tujuan wajib diisi.',
-                'target_url.url' => 'Format URL tujuan tidak valid.',
+                'target_url.string' => 'Format URL tujuan tidak valid.',
                 'custom_alias.alpha_dash' => 'Alias khusus hanya boleh berisi huruf, angka, strip (-), dan garis bawah (_).',
                 'custom_alias.unique' => 'Alias khusus sudah digunakan. Silakan pilih yang lain.',
             ]);
@@ -71,13 +71,13 @@ class LinkController extends Controller
     {
         try {
             $link = $request->validate([
-                'target_url' => 'required|url',
+                'target_url' => 'required|string|max:2048',
                 'custom_alias' => 'nullable|alpha_dash|unique:links,new_link',
                 'name' => 'required|string|max:255',
                 'is_active' => 'nullable|boolean',
             ], [
                 'target_url.required' => 'URL tujuan wajib diisi.',
-                'target_url.url' => 'Format URL tujuan tidak valid.',
+                'target_url.string' => 'Format URL tujuan tidak valid.',
                 'custom_alias.alpha_dash' => 'Alias khusus hanya boleh berisi huruf, angka, strip (-), dan garis bawah (_).',
                 'custom_alias.unique' => 'Alias khusus sudah digunakan. Silakan pilih yang lain.',
                 'name.required' => 'Nama link wajib diisi.',
@@ -139,13 +139,13 @@ class LinkController extends Controller
     {
         try {
             $validated = $request->validate([
-                'target_url' => 'required|url',
+                'target_url' => 'required|string|max:2048',
                 'custom_alias' => 'required|alpha_dash|unique:links,new_link,' . $id . ',id_link',
                 'name' => 'required|string|max:255',
                 'is_active' => 'nullable|boolean',
             ], [
                 'target_url.required' => 'URL tujuan wajib diisi.',
-                'target_url.url' => 'Format URL tujuan tidak valid.',
+                'target_url.string' => 'Format URL tujuan tidak valid.',
                 'custom_alias.required' => 'Alias wajib diisi.',
                 'custom_alias.alpha_dash' => 'Alias khusus hanya boleh berisi huruf, angka, strip (-), dan garis bawah (_).',
                 'custom_alias.unique' => 'Alias khusus sudah digunakan. Silakan pilih yang lain.',
